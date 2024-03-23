@@ -34,3 +34,55 @@ Possible Database deployment scenarios:
 
 ### Use Azure SQL databse in Microsoft Azure Cloud (main method)
 To work with the database in Microsoft Azure, you need to remember to set a firewall rule for your IP address. [Firewall configuration is done through the Microsoft Azure panel.](https://learn.microsoft.com/en-us/azure/azure-sql/database/firewall-configure?view=azuresql)
+
+
+### Use Docker or Docker compose(alternative method)
+Run database use docker:
+
+```
+sudo docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=YourStrong@Passw0rd" \
+   -p 1433:1433 --name sql1 --hostname sql1 \
+   -d \
+   mcr.microsoft.com/mssql/server:2019-latest
+```
+
+
+Run database use docker-compose:
+Create docker-compose.yaml file in root folder with code:
+```
+version: '3.7'
+
+services:
+  sql.data:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sqldatacontainer
+```
+Create docker-compose.override.yaml in root folder with code:
+
+For Intel / Amd CPU
+```
+version: '3.7'
+
+services:
+  sql.data:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sqldatacontainer
+```
+For Apply Silicon CPU(M1/M2/M3)
+```
+version: '3.7'
+
+services:
+  sql.data:
+    image: mcr.microsoft.com/azure-sql-edge
+    container_name: sqldatacontainer
+```
+So, Now we can run docker-compose command for create local docker image
+if you use docker-compose for Intel / Amd CPU (x86/x64)
+```
+docker-compose -f docker-compose.yml -f docker-compose.override.yml up
+```
+if you use docker-compose for Apply Silicon CPU - M1/M2/M3 (ARM)
+```
+docker-compose -f docker-compose.arm.yml -f docker-compose.override.yml up
+```
