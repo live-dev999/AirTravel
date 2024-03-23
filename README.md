@@ -23,3 +23,10 @@
 2. Set environment in appSettings.json and appSettings.Development.json
 3. Migrate EF CORE or deploy a database backup
 4. Build and run project (use dotnet commands or use IDEs([Visual Studio 2022 / Visual Studio for Mac](https://visualstudio.microsoft.com/downloads/) or [Microsoft VS Code](https://visualstudio.microsoft.com/downloads/))
+
+
+## **Deploy databases**
+Possible Database deployment scenarios:
++ use Azure SQL databse in Microsoft Azure Cloud
++ use docker or docker-compose
++ deploy local database
