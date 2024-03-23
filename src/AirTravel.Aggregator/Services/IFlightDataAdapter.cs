@@ -15,6 +15,8 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System;
+using System.Collections.Generic;
 using AirTravel.Aggregator.Services;
 
 namespace AirTravel.Aggregator;

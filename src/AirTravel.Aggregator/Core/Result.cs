@@ -15,14 +15,16 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AirTravel.Aggregator.Services;
+namespace AirTravel.Aggregator.Core;
 
-namespace AirTravel.Aggregator;
-
-public interface IFlightAggregator
+public class Result<T>
 {
-    Task<List<IFlightInfo>> SearchFlightsAsync(string from, string to, DateTime date);
+    public bool IsSeccess { get; set; }
+    public T Value { get; set; }
+    public string Error { get; set; }
+
+    public static Result<T> Success(T value) => new Result<T> { IsSeccess = true, Value = value };
+
+    public static Result<T> Failure(string error) =>
+        new Result<T> { IsSeccess = false, Error = error };
 }

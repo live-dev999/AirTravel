@@ -15,6 +15,9 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using AirTravel.Aggregator.Services;
 
 namespace AirTravel.Aggregator;
@@ -23,13 +26,18 @@ public class FlightAggregator : IFlightAggregator
 {
     private readonly List<IFlightDataAdapter> adapters;
 
-    public FlightAggregator(List<IFlightDataAdapter> adapters)
+    public FlightAggregator()
     {
-        this.adapters = adapters;
+        this.adapters = new List<IFlightDataAdapter>(){
+            new FakeFirstFlightSourceAdapter(new FakeFirstFlightSource()),
+            new FakeSecondFlightSourceAdapter(new FakeSecondFlightSource()),
+        };
     }
 
-    public List<IFlightInfo> SearchFlights(string from, string to, DateTime date)
+    public async Task<List<IFlightInfo>> SearchFlightsAsync(string from, string to, DateTime date)
     {
+        await Task.Delay(300);
+
         List<IFlightInfo> allFlights = new List<IFlightInfo>();
 
         // Getting flight data from each adapter and aggregating them

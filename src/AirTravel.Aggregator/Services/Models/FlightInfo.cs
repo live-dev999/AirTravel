@@ -15,14 +15,16 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AirTravel.Aggregator.Services;
 
-namespace AirTravel.Aggregator;
+namespace AirTravel.Aggregator.Services.Models;
 
-public interface IFlightAggregator
+public class FlightInfo : IFlightInfo
 {
-    Task<List<IFlightInfo>> SearchFlightsAsync(string from, string to, DateTime date);
+    public string FlightNumber { get; set; }
+    public string DepartureAirport { get; set; }
+    public string ArrivalAirport { get; set; }
+    public DateTime DepartureTime { get; set; }
+    public DateTime ArrivalTime { get; set; }
 }

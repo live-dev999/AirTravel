@@ -15,15 +15,18 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using AirTravel.Aggregator.Services;
 
 namespace AirTravel.Aggregator;
 
 public class FakeFirstFlightSourceAdapter : IFlightDataAdapter
 {
-    private readonly FakeFirstFlightSource source;
+    private readonly IFakeFirstFlightSource source;
 
-    public FakeFirstFlightSourceAdapter(FakeFirstFlightSource source)
+    public FakeFirstFlightSourceAdapter(IFakeFirstFlightSource source)
     {
         this.source = source;
     }

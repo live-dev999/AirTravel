@@ -15,14 +15,10 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AirTravel.Aggregator.Services;
+namespace AirTravel.Aggregator.Core;
 
-namespace AirTravel.Aggregator;
-
-public interface IFlightAggregator
-{
-    Task<List<IFlightInfo>> SearchFlightsAsync(string from, string to, DateTime date);
-}
+public delegate IFlightDataAdapter  StrategyFlightDataAdapter(FlightSource type);
+ public enum FlightSource{
+    FakeFirstFlightSourceAdapter,
+    FakeSecondFlightSourceAdapter
+ }

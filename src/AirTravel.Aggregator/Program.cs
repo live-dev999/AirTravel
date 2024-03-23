@@ -15,9 +15,41 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System;
+using AirTravel.Aggregator;
+using AirTravel.Aggregator.Core;
+using AirTravel.Aggregator.Services;
+using AirTravel.Aggregator.Services.Models;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddControllers();
+
+builder.Services.AddScoped<IFlightInfo,FlightInfo>();
+builder.Services.AddScoped<IFakeFirstFlightSource, FakeFirstFlightSource>();
+builder.Services.AddScoped<IFakeSecondFlightSource, FakeSecondFlightSource>();
+builder.Services.AddScoped<IFlightDataAdapter, FakeFirstFlightSourceAdapter>();
+builder.Services.AddScoped<IFlightDataAdapter, FakeSecondFlightSourceAdapter>();
+builder.Services.AddScoped<IFlightAggregator, FlightAggregator>();
+builder.Services.AddScoped<StrategyFlightDataAdapter>(provider =>
+    (type) =>
+    {
+        switch (type)
+        {
+            case FlightSource.FakeFirstFlightSourceAdapter:
+                return provider.GetRequiredService<FakeFirstFlightSourceAdapter>();
+            case FlightSource.FakeSecondFlightSourceAdapter:
+                return provider.GetRequiredService<FakeSecondFlightSourceAdapter>();
+            default:
+                throw new NotImplementedException();
+        }
+    }
+);
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -32,10 +64,5 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.MapDefaultControllerRoute();
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

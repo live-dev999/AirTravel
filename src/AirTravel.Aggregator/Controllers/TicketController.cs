@@ -15,13 +15,17 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using AirTravel.Aggregator.Core;
+using AirTravel.Aggregator.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirTravel.Aggregator.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class TicketController: ControllerBase
+    public class TicketController : BaseApiController
     {
         private readonly IFlightAggregator _aggregator;
 
@@ -29,5 +33,14 @@ namespace AirTravel.Aggregator.Controllers
         {
             this._aggregator = aggregator;
         }
+
+        [HttpPost("Search")]
+        public async Task<IActionResult> SearchTickets(CancellationToken ct) =>
+            HandleResult(
+                Result<List<IFlightInfo>>.Success(
+                    await _aggregator.SearchFlightsAsync("", "", DateTime.Now)
+                ),
+                ct
+            );
     }
 }

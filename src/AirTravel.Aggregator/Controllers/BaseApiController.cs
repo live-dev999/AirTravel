@@ -15,14 +15,31 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AirTravel.Aggregator.Services;
+using AirTravel.Aggregator.Core;
+using Microsoft.AspNetCore.Mvc;
 
-namespace AirTravel.Aggregator;
-
-public interface IFlightAggregator
+namespace AirTravel.Aggregator.Controllers
 {
-    Task<List<IFlightInfo>> SearchFlightsAsync(string from, string to, DateTime date);
+    [ApiController]
+    [Route("api/[controller]")]
+    public abstract class BaseApiController : ControllerBase
+    {
+        #region Methods
+
+        public IActionResult HandleResult<T>(Result<T> result, System.Threading.CancellationToken ct)
+        {
+            if (result == null)
+                return NotFound();
+
+            if (result.IsSeccess && result.Value != null)
+                return Ok(result.Value);
+
+            if (result.IsSeccess && result.Value == null)
+                return NotFound();
+
+            return BadRequest(result.Error);
+        }
+
+        #endregion
+    }
 }

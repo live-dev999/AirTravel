@@ -15,14 +15,29 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System;
+using System.Collections.Generic;
 using AirTravel.Aggregator.Services;
+using AirTravel.Aggregator.Services.Models;
 
 namespace AirTravel.Aggregator;
 
-public class FakeFirstFlightSource
+public interface IFakeFirstFlightSource{
+    List<IFlightInfo> SearchFlights(string from, string to, DateTime date);
+}
+
+public class FakeFirstFlightSource: IFakeFirstFlightSource
 {
-    internal List<IFlightInfo> SearchFlights(string from, string to, DateTime date)
+    public List<IFlightInfo> SearchFlights(string from, string to, DateTime date)
     {
-        throw new NotImplementedException();
+        return new List<IFlightInfo>{
+            new FlightInfo(){
+                 FlightNumber = Guid.NewGuid().ToString()
+            },
+            new FlightInfo(){
+                FlightNumber = Guid.NewGuid().ToString()
+            },
+        };
+        // throw new NotImplementedException();
     }
 }
