@@ -24,6 +24,21 @@ namespace AirTravel.Aggregator.Services.Sources.SecondSource;
 
 public class FakeSecondFlightSource : IFakeSecondFlightSource
 {
+    #region Fields
+    private readonly List<IFlightInfo> _flightInfos = new List<IFlightInfo>
+    {
+        new FlightInfo() { FlightNumber = Guid.NewGuid().ToString() },
+        new FlightInfo() { FlightNumber = Guid.NewGuid().ToString() },
+    };
+    #endregion
+    
+    
+    #region Ctors
+    public FakeSecondFlightSource() { }
+
+    #endregion
+
+
     /*
     Note: To handle unpredictably long responses from sources in the system, you should implement
     timeout mechanisms and exception handling.
@@ -48,11 +63,7 @@ public class FakeSecondFlightSource : IFakeSecondFlightSource
     public async Task<List<IFlightInfo>> SearchFlightsAsync(string from, string to, DateTime date)
     {
         return await Task.FromResult(
-            new List<IFlightInfo>
-            {
-                new FlightInfo() { FlightNumber = Guid.NewGuid().ToString() },
-                new FlightInfo() { FlightNumber = Guid.NewGuid().ToString() },
-            }
+            _flightInfos
         );
         // throw new NotImplementedException();
     }

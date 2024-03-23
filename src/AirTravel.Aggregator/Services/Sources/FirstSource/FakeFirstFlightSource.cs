@@ -24,6 +24,21 @@ namespace AirTravel.Aggregator.Services.Sources.FirstSource;
 
 public class FakeFirstFlightSource : IFakeFirstFlightSource
 {
+    #region Fields
+    private readonly List<IFlightInfo> _flightInfos = new List<IFlightInfo>
+    {
+        new FlightInfo() { FlightNumber = Guid.NewGuid().ToString() },
+        new FlightInfo() { FlightNumber = Guid.NewGuid().ToString() },
+    };
+    #endregion
+    
+    
+    #region Ctors
+    public FakeFirstFlightSource() { }
+
+    #endregion
+
+
     /*
     Note: To handle unpredictably long responses from sources in the system, you should implement
     timeout mechanisms and exception handling.
@@ -49,11 +64,7 @@ public class FakeFirstFlightSource : IFakeFirstFlightSource
     {
         //await Task.Delay(3000);
         return await Task.FromResult(
-            new List<IFlightInfo>
-            {
-                new FlightInfo() { FlightNumber = Guid.NewGuid().ToString() },
-                new FlightInfo() { FlightNumber = Guid.NewGuid().ToString() },
-            }
+            _flightInfos
         );
         // throw new NotImplementedException();
     }
