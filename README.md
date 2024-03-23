@@ -86,3 +86,21 @@ if you use docker-compose for Apply Silicon CPU - M1/M2/M3 (ARM)
 ```
 docker-compose -f docker-compose.arm.yml -f docker-compose.override.yml up
 ```
+
+
+### **Deploy local database in your machine (alternative method)**
+Go to link [for download Microsoft SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads). IInstall Microsoft SQL Server using the installer or any other method available.
+
+
+## Build and run applications
+Before launching, be sure to set the variables in the appsettings.json configuration files. It is important to specify the correct database connection string
+```
+ "ConnectionStrings": {
+    "AirTravelConnection": "Server=tcp:<server>,<port>;Initial Catalog=<databasename>;Persist Security Info=False;User ID=<user>;Password=<password>;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+  },
+```
+Can use commands use terminal or use IDEs(Microsoft Visual Studio 2022 or VS Code):
+```
+dotnet build [options]
+dotnet run [options]
+```
