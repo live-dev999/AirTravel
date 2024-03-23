@@ -18,9 +18,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AirTravel.Aggregator.Services;
 
-namespace AirTravel.Aggregator;
+namespace AirTravel.Aggregator.Services.Sources.FirstSource;
 
 public class FakeFirstFlightSourceAdapter : IFlightDataAdapter
 {

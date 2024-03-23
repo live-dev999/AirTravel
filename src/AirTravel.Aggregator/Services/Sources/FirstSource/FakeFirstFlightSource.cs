@@ -17,26 +17,23 @@
 
 using System;
 using System.Collections.Generic;
-using AirTravel.Aggregator.Services;
 using AirTravel.Aggregator.Services.Models;
 
-namespace AirTravel.Aggregator;
+namespace AirTravel.Aggregator.Services.Sources.FirstSource;
 
-public interface IFakeFirstFlightSource{
+public interface IFakeFirstFlightSource
+{
     List<IFlightInfo> SearchFlights(string from, string to, DateTime date);
 }
 
-public class FakeFirstFlightSource: IFakeFirstFlightSource
+public class FakeFirstFlightSource : IFakeFirstFlightSource
 {
     public List<IFlightInfo> SearchFlights(string from, string to, DateTime date)
     {
-        return new List<IFlightInfo>{
-            new FlightInfo(){
-                 FlightNumber = Guid.NewGuid().ToString()
-            },
-            new FlightInfo(){
-                FlightNumber = Guid.NewGuid().ToString()
-            },
+        return new List<IFlightInfo>
+        {
+            new FlightInfo() { FlightNumber = Guid.NewGuid().ToString() },
+            new FlightInfo() { FlightNumber = Guid.NewGuid().ToString() },
         };
         // throw new NotImplementedException();
     }

@@ -20,6 +20,8 @@ using AirTravel.Aggregator;
 using AirTravel.Aggregator.Core;
 using AirTravel.Aggregator.Services;
 using AirTravel.Aggregator.Services.Models;
+using AirTravel.Aggregator.Services.Sources.FirstSource;
+using AirTravel.Aggregator.Services.Sources.SecondSource;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -40,8 +42,10 @@ builder.Services.AddScoped<StrategyFlightDataAdapter>(provider =>
     {
         return type switch
         {
-            FlightSource.FakeFirstFlightSourceAdapter => provider.GetRequiredService<FakeFirstFlightSourceAdapter>(),
-            FlightSource.FakeSecondFlightSourceAdapter => provider.GetRequiredService<FakeSecondFlightSourceAdapter>(),
+            FlightSource.FakeFirstFlightSourceAdapter
+                => provider.GetRequiredService<FakeFirstFlightSourceAdapter>(),
+            FlightSource.FakeSecondFlightSourceAdapter
+                => provider.GetRequiredService<FakeSecondFlightSourceAdapter>(),
             _ => throw new NotImplementedException(),
         };
     }

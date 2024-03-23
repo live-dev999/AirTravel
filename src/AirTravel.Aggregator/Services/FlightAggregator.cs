@@ -19,6 +19,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AirTravel.Aggregator.Services;
+using AirTravel.Aggregator.Services.Sources.FirstSource;
+using AirTravel.Aggregator.Services.Sources.SecondSource;
 
 namespace AirTravel.Aggregator;
 

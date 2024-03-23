@@ -17,10 +17,9 @@
 
 using System;
 using System.Collections.Generic;
-using AirTravel.Aggregator.Services;
 using AirTravel.Aggregator.Services.Models;
 
-namespace AirTravel.Aggregator;
+namespace AirTravel.Aggregator.Services.Sources.SecondSource;
 
 public interface IFakeSecondFlightSource
 {
