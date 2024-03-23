@@ -30,3 +30,7 @@ Possible Database deployment scenarios:
 + use Azure SQL databse in Microsoft Azure Cloud
 + use docker or docker-compose
 + deploy local database
+
+
+### Use Azure SQL databse in Microsoft Azure Cloud (main method)
+To work with the database in Microsoft Azure, you need to remember to set a firewall rule for your IP address. [Firewall configuration is done through the Microsoft Azure panel.](https://learn.microsoft.com/en-us/azure/azure-sql/database/firewall-configure?view=azuresql)
