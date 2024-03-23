@@ -1,4 +1,8 @@
-# About project
+# AirTravel 
+Flight search API aggregator
+
+
+## About project
 The project is a test task. The full description of the title can be read here [EN](/docs/TASK-EN.MD) of [RU](/docs/TASK-RU.MD)
 
 ## Build info
