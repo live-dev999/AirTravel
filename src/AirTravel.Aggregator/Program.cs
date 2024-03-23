@@ -37,14 +37,14 @@ builder.Services.AddScoped<IFakeSecondFlightSource, FakeSecondFlightSource>();
 builder.Services.AddScoped<IFlightDataAdapter, FakeFirstFlightSourceAdapter>();
 builder.Services.AddScoped<IFlightDataAdapter, FakeSecondFlightSourceAdapter>();
 builder.Services.AddScoped<IFlightAggregator, FlightAggregator>();
-builder.Services.AddScoped<StrategyFlightDataAdapter>(provider =>
+builder.Services.AddScoped<FlightDataAdapterStrategy>(provider =>
     (type) =>
     {
         return type switch
         {
-            FlightSource.FakeFirstFlightSourceAdapter
+            FlightDataAdapterSource.FakeFirstFlightSourceAdapter
                 => provider.GetRequiredService<FakeFirstFlightSourceAdapter>(),
-            FlightSource.FakeSecondFlightSourceAdapter
+            FlightDataAdapterSource.FakeSecondFlightSourceAdapter
                 => provider.GetRequiredService<FakeSecondFlightSourceAdapter>(),
             _ => throw new NotImplementedException(),
         };

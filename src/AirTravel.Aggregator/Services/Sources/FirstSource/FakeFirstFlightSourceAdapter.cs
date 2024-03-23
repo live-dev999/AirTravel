@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace AirTravel.Aggregator.Services.Sources.FirstSource;
 
@@ -30,10 +31,10 @@ public class FakeFirstFlightSourceAdapter : IFlightDataAdapter
         this.source = source;
     }
 
-    public List<IFlightInfo> GetFlights(string from, string to, DateTime date)
+    public async Task<List<IFlightInfo>> GetFlightsAsync(string from, string to, DateTime date)
     {
         // We retrieve data from data source 1 and transform it into a unified format.
-        List<IFlightInfo> flightsFromSource = source.SearchFlights(from, to, date);
+        List<IFlightInfo> flightsFromSource = await source.SearchFlightsAsync(from, to, date);
         return flightsFromSource.Cast<IFlightInfo>().ToList();
     }
 }

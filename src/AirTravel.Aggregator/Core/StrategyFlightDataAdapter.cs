@@ -17,8 +17,10 @@
 
 namespace AirTravel.Aggregator.Core;
 
-public delegate IFlightDataAdapter  StrategyFlightDataAdapter(FlightSource type);
- public enum FlightSource{
+public delegate IFlightDataAdapter FlightDataAdapterStrategy(FlightDataAdapterSource type);
+
+public enum FlightDataAdapterSource
+{
     FakeFirstFlightSourceAdapter,
     FakeSecondFlightSourceAdapter
- }
+}

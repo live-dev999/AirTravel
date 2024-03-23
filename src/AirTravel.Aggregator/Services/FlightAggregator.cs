@@ -30,7 +30,8 @@ public class FlightAggregator : IFlightAggregator
 
     public FlightAggregator()
     {
-        this.adapters = new List<IFlightDataAdapter>(){
+        this.adapters = new List<IFlightDataAdapter>()
+        {
             new FakeFirstFlightSourceAdapter(new FakeFirstFlightSource()),
             new FakeSecondFlightSourceAdapter(new FakeSecondFlightSource()),
         };
@@ -42,11 +43,20 @@ public class FlightAggregator : IFlightAggregator
 
         List<IFlightInfo> allFlights = new List<IFlightInfo>();
 
+        List<Task> tasks = new List<Task>();
+
         // Getting flight data from each adapter and aggregating them
         foreach (var adapter in adapters)
         {
-            allFlights.AddRange(adapter.GetFlights(from, to, date));
+            tasks.Add(
+                Task.Run(async () =>
+                {
+                    allFlights.AddRange(await adapter.GetFlightsAsync(from, to, date));
+                })
+            );
         }
+
+        await Task.WhenAll(tasks);
 
         return allFlights;
     }

@@ -15,14 +15,19 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AirTravel.Aggregator.Services;
+namespace AirTravel.Aggregator.Core;
 
-namespace AirTravel.Aggregator;
-
-public interface IFlightDataAdapter
+public class AppException
 {
-    Task<List<IFlightInfo>> GetFlightsAsync(string from, string to, DateTime date);
+
+    public AppException(int statusCode, string message, string details = null)
+    {
+        Details = details;
+        Message = message;
+        StatusCode = statusCode;
+    }
+
+    public int StatusCode { get; set; }
+    public string Message { get; set; }
+    public string Details { get; set; }
 }
