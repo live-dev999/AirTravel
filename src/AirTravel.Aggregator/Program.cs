@@ -29,7 +29,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
-builder.Services.AddScoped<IFlightInfo,FlightInfo>();
+builder.Services.AddScoped<IFlightInfo, FlightInfo>();
 builder.Services.AddScoped<IFakeFirstFlightSource, FakeFirstFlightSource>();
 builder.Services.AddScoped<IFakeSecondFlightSource, FakeSecondFlightSource>();
 builder.Services.AddScoped<IFlightDataAdapter, FakeFirstFlightSourceAdapter>();
@@ -38,15 +38,12 @@ builder.Services.AddScoped<IFlightAggregator, FlightAggregator>();
 builder.Services.AddScoped<StrategyFlightDataAdapter>(provider =>
     (type) =>
     {
-        switch (type)
+        return type switch
         {
-            case FlightSource.FakeFirstFlightSourceAdapter:
-                return provider.GetRequiredService<FakeFirstFlightSourceAdapter>();
-            case FlightSource.FakeSecondFlightSourceAdapter:
-                return provider.GetRequiredService<FakeSecondFlightSourceAdapter>();
-            default:
-                throw new NotImplementedException();
-        }
+            FlightSource.FakeFirstFlightSourceAdapter => provider.GetRequiredService<FakeFirstFlightSourceAdapter>(),
+            FlightSource.FakeSecondFlightSourceAdapter => provider.GetRequiredService<FakeSecondFlightSourceAdapter>(),
+            _ => throw new NotImplementedException(),
+        };
     }
 );
 

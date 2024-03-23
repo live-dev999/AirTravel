@@ -22,23 +22,20 @@ using AirTravel.Aggregator.Services.Models;
 
 namespace AirTravel.Aggregator;
 
-public interface IFakeSecondFlightSource{
+public interface IFakeSecondFlightSource
+{
     List<IFlightInfo> SearchFlights(string from, string to, DateTime date);
 }
 
-
-public class FakeSecondFlightSource: IFakeSecondFlightSource
+public class FakeSecondFlightSource : IFakeSecondFlightSource
 {
     public List<IFlightInfo> SearchFlights(string from, string to, DateTime date)
     {
-        return new List<IFlightInfo>{
-            new FlightInfo(){
-                 FlightNumber = Guid.NewGuid().ToString()
-            },
-            new FlightInfo(){
-                 FlightNumber = Guid.NewGuid().ToString()
-            },
+        return new List<IFlightInfo>
+        {
+            new FlightInfo() { FlightNumber = Guid.NewGuid().ToString() },
+            new FlightInfo() { FlightNumber = Guid.NewGuid().ToString() },
         };
-        // throw new NotImplementedException();
+        throw new NotImplementedException();
     }
 }
