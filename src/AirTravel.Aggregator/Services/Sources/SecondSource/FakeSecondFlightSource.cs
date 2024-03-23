@@ -22,11 +22,6 @@ using AirTravel.Aggregator.Services.Models;
 
 namespace AirTravel.Aggregator.Services.Sources.SecondSource;
 
-public interface IFakeSecondFlightSource
-{
-    Task<List<IFlightInfo>> SearchFlightsAsync(string from, string to, DateTime date);
-}
-
 public class FakeSecondFlightSource : IFakeSecondFlightSource
 {
     /*
