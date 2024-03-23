@@ -25,9 +25,9 @@ jobs:
       with:
         dotnet-version: 7.0.x
     - name: Restore dependencies
-      run: dotnet restore ManagingSales.Web.sln
+      run: dotnet restore AirTravel.sln
       
     - name: Build
-      run: dotnet build --no-restore ManagingSales.Web.sln
+      run: dotnet build --no-restore AirTravel.sln
     - name: Test
-      run: dotnet test --no-build --verbosity normal ManagingSales.Web.sln
+      run: dotnet test --no-build --verbosity normal AirTravel.sln
