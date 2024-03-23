@@ -4,8 +4,6 @@ reset="\033[m"
 projectName="AirTravel"
 echo "About to create the directory"
 mkdir src
-cd src
-
 echo -e "${green}Creating solution and projects${reset}"
 dotnet new sln -n $projectName
 cd src
@@ -13,13 +11,8 @@ dotnet new webapi -n $projectName.API
 dotnet new classlib -n $projectName.Application
 dotnet new classlib -n $projectName.Domain
 dotnet new classlib -n $projectName.Persistence
-
 cd ..
 echo -e "${green}Adding projects to the solution${reset}"
-dotnet sln add $projectName.API/$projectName.API.csproj
-dotnet sln add $projectName.Application/$projectName.Application.csproj
-dotnet sln add $projectName.Domain/$projectName.Domain.csproj
-dotnet sln add $projectName.Persistence/$projectName.Persistence.csproj
 dotnet sln add ./src/$projectName.API/$projectName.API.csproj
 dotnet sln add ./src/$projectName.Application/$projectName.Application.csproj
 dotnet sln add ./src/$projectName.Domain/$projectName.Domain.csproj
@@ -38,7 +31,8 @@ dotnet add reference ../$projectName.Domain/$projectName.Domain.csproj
 
 cd ..
 cd ..
-
+echo "Create folder tests"
+mkdir tests
 echo -e "${green}Create tests project to the solution${reset}"
 cd ./tests
 dotnet new xunit -o Tests.$projectName.API
