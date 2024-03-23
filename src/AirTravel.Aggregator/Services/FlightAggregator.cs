@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AirTravel.Aggregator.Services;
 using AirTravel.Aggregator.Services.Sources.FirstSource;
@@ -26,14 +27,20 @@ namespace AirTravel.Aggregator;
 
 public class FlightAggregator : IFlightAggregator
 {
-    private readonly List<IFlightDataAdapter> adapters;
+    private readonly Dictionary<FlightInfoSource, IFlightDataAdapter> adapters;
 
     public FlightAggregator()
     {
-        this.adapters = new List<IFlightDataAdapter>()
+        this.adapters = new Dictionary<FlightInfoSource, IFlightDataAdapter>()
         {
-            new FakeFirstFlightSourceAdapter(new FakeFirstFlightSource()),
-            new FakeSecondFlightSourceAdapter(new FakeSecondFlightSource()),
+            {
+                FlightInfoSource.FakeFirstFlightSource,
+                new FakeFirstFlightSourceAdapter(new FakeFirstFlightSource())
+            },
+            {
+                FlightInfoSource.FakeSecondFlightSource,
+                new FakeSecondFlightSourceAdapter(new FakeSecondFlightSource())
+            },
         };
     }
 
@@ -51,7 +58,7 @@ public class FlightAggregator : IFlightAggregator
             tasks.Add(
                 Task.Run(async () =>
                 {
-                    allFlights.AddRange(await adapter.GetFlightsAsync(from, to, date));
+                    allFlights.AddRange(await adapter.Value.GetFlightsAsync(from, to, date));
                 })
             );
         }
@@ -59,5 +66,17 @@ public class FlightAggregator : IFlightAggregator
         await Task.WhenAll(tasks);
 
         return allFlights;
+    }
+
+    public async Task<IFlightInfo> SetReservationAsync(IFlightInfo tiket, DateTime reservationDate)
+    {
+        var source = SelectAdapter(tiket);
+        return await source.SetReservationAsync(tiket);
+        //throw new NotImplementedException();
+    }
+
+    private IFlightDataAdapter SelectAdapter(IFlightInfo tiket)
+    {
+        return adapters.First(_=>_.Key==tiket.FlightInfoSource).Value;
     }
 }

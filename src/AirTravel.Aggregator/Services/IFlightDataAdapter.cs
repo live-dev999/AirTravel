@@ -25,4 +25,5 @@ namespace AirTravel.Aggregator;
 public interface IFlightDataAdapter
 {
     Task<List<IFlightInfo>> GetFlightsAsync(string from, string to, DateTime date);
+    Task<IFlightInfo> SetReservationAsync(IFlightInfo tiket);
 }

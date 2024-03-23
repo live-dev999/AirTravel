@@ -15,8 +15,11 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System.Diagnostics;
+using System.Reflection;
 using AirTravel.Aggregator.Core;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace AirTravel.Aggregator.Controllers
 {
@@ -24,10 +27,26 @@ namespace AirTravel.Aggregator.Controllers
     [Route("api/[controller]")]
     public abstract class BaseApiController : ControllerBase
     {
+        private readonly ILogger<BaseApiController> _logger;
+        
+        #region Ctors
+        public BaseApiController(ILogger<BaseApiController> logger)
+        {
+            this._logger = logger;
+        }
+        #endregion
+        
+        
         #region Methods
 
         public IActionResult HandleResult<T>(Result<T> result, System.Threading.CancellationToken ct)
         {
+            // MethodBase caller = new StackFrame(1, false).GetMethod();
+            // string callerMethodName = caller.Name;
+            // //string calledMethodName = MethodBase.GetCurrentMethod().Name;
+
+            // _logger.LogInformation($"The caller method is: ${callerMethodName}");
+
             if (result == null)
                 return NotFound();
 

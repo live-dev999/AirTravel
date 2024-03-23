@@ -21,7 +21,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using AirTravel.Aggregator.Core;
 using AirTravel.Aggregator.Services;
+using AirTravel.Aggregator.Services.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace AirTravel.Aggregator.Controllers
 {
@@ -29,16 +31,27 @@ namespace AirTravel.Aggregator.Controllers
     {
         private readonly IFlightAggregator _aggregator;
 
-        public TicketController(IFlightAggregator aggregator)
+        public TicketController(IFlightAggregator aggregator, ILogger<TicketController> logger):base(logger)
         {
             this._aggregator = aggregator;
         }
 
         [HttpPost("Search")]
-        public async Task<IActionResult> SearchTickets(CancellationToken ct) =>
+        public async Task<IActionResult> SearchTicketsAsync(CancellationToken ct) =>
             HandleResult(
                 Result<List<IFlightInfo>>.Success(
                     await _aggregator.SearchFlightsAsync("", "", DateTime.Now)
+                ),
+                ct
+            );
+
+        [HttpPost("SetReservation")]
+        public async Task<IActionResult> SetReservationAsync(
+            [FromBody] FlightInfo tiket,
+            CancellationToken ct
+        ) => HandleResult(
+                Result<IFlightInfo>.Success(
+                    await _aggregator.SetReservationAsync(tiket, DateTime.Now)
                 ),
                 ct
             );

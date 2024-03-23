@@ -37,4 +37,9 @@ public class FakeFirstFlightSourceAdapter : IFlightDataAdapter
         List<IFlightInfo> flightsFromSource = await source.SearchFlightsAsync(from, to, date);
         return flightsFromSource.Cast<IFlightInfo>().ToList();
     }
+
+    public Task<IFlightInfo> SetReservationAsync(IFlightInfo tiket)
+    {
+        throw new NotImplementedException();
+    }
 }

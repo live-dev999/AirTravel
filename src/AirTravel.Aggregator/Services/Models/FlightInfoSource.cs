@@ -15,16 +15,10 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using System;
-
 namespace AirTravel.Aggregator.Services;
 
-public interface IFlightInfo
+public enum FlightInfoSource
 {
-    string FlightNumber { get; set; }
-    string DepartureAirport { get; set; }
-    string ArrivalAirport { get; set; }
-    DateTime DepartureTime { get; set; }
-    DateTime ArrivalTime { get; set; }
-    FlightInfoSource FlightInfoSource { get; set; }
+    FakeFirstFlightSource,
+    FakeSecondFlightSource
 }
