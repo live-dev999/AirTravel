@@ -53,8 +53,7 @@ namespace AirTravel.Application.Tickets
                 var tickets = await _context.Tickets
                 .ProjectTo<TicketDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
-
-                //var ticketsToReturn = _mapper.Map<List<TicketDto>>(tickets);
+                
                 return Result<List<TicketDto>>.Success(tickets);
             }
         }

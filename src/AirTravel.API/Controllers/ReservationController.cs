@@ -36,7 +36,7 @@ public class ReservationController : BaseApiController
         throw new NotImplementedException();
     }
 
-    [HttpDelete("{id}")] //api/activities/{id}
+    [HttpDelete("{id}")] //api/reservation/{id}
     public IActionResult Delete(Guid id)
     {
         throw new NotImplementedException();
