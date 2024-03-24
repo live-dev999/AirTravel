@@ -76,7 +76,7 @@ services:
       - ../2. Init Database:/docker-entrypoint-initdb.d
       - atdb-data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "5932:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d atdb"]
       interval: 10s
@@ -132,8 +132,8 @@ services:
   air-api:
     environment:
       # - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionString=Host=192.168.0.97;Port=5432;Database=atdb;Username=postgres;Password=NewPassw0rd
-      # - ConnectionString=Host=${EXTERNAL_DNS_NAME_OR_IP};Port=5432;Database=atdb;Username=postgres;Password=postgres;sslmode=disable
+      # - ConnectionString=Host=192.168.0.97;Port=5432;Database=atdb;Username=postgres;Password=NewPassw0rd
+      - ConnectionString=Host=${EXTERNAL_DNS_NAME_OR_IP};Port=5932;Database=atdb;Username=postgres;Password=postgres;
       - Url_AggregatorUrl=http://${EXTERNAL_DNS_NAME_OR_IP}:5003/
       #- ASPNETCORE_URLS=https://+:443;http://+:80
     ports:

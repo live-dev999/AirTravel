@@ -27,8 +27,24 @@ public class FakeSecondFlightSource : IFakeSecondFlightSource
     #region Fields
     private readonly List<IFlightInfo> _flightInfos = new List<IFlightInfo>
     {
-        new FlightInfo() { FlightNumber = Guid.NewGuid().ToString() },
-        new FlightInfo() { FlightNumber = Guid.NewGuid().ToString() },
+        new FlightInfo()
+        {
+            FlightId = Guid.NewGuid().ToString(),
+            FlightNumber = Utils.KeyGenerator.Generate(9),
+            ArrivalAirport = "Minsk",
+            DepartureAirport = "Gomel",
+            DepartureTime = DateTime.UtcNow.AddMonths(1),
+            ArrivalTime = DateTime.UtcNow.AddMonths(1).AddDays(1)
+        },
+        new FlightInfo()
+        {
+            FlightId = Guid.NewGuid().ToString(),
+            FlightNumber = Utils.KeyGenerator.Generate(5),
+            ArrivalAirport = "New Orleans",
+            DepartureAirport = "Washington",
+            DepartureTime = DateTime.UtcNow.AddMonths(2),
+            ArrivalTime = DateTime.UtcNow.AddMonths(1).AddDays(2)
+        },
     };
     #endregion
     

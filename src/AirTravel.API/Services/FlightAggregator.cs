@@ -18,18 +18,20 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text.Json;
+using System.Net.Http.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using AirTravel.Application.Core;
 using AirTravel.Config;
 using AirTravel.Domain;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace AirTravel.API.Services
 {
     public class ExternalFlightData
     {
+        public string FlightId { get; set; }
         public string FlightNumber { get; set; }
         public string DepartureAirport { get; set; }
         public string ArrivalAirport { get; set; }
@@ -42,13 +44,13 @@ namespace AirTravel.API.Services
         Task<List<ExternalFlightData>> GetFlights(string from, string to, DateTime date);
     }
 
-    public static class HttpContentExtensions
-    {
-        public static async Task<T> ReadAsAsync<T>(
-            this HttpContent content,
-            CancellationToken ct
-        ) => await JsonSerializer.DeserializeAsync<T>(await content.ReadAsStreamAsync(ct));
-    }
+    // public static class HttpContentExtensions
+    // {
+    //     public static async Task<T> ReadAsAsync<T>(
+    //         this HttpContent content,
+    //         CancellationToken ct
+    //     ) => await JsonSerializer.DeserializeAsync<T>(await content.ReadAsStreamAsync(ct));
+    // }
 
     public class ExternalFlightApi : IExternalFlightApi
     {
@@ -87,7 +89,8 @@ namespace AirTravel.API.Services
             _logger.LogInformation(
                 $"Called is: ExternalFlightApi - GetFlights  = {response.StatusCode}"
             );
-            var result = await response.Content.ReadAsAsync<List<ExternalFlightData>>(ct);
+            _logger.LogInformation(await response.Content.ReadAsStringAsync());
+            var result = await response.Content.ReadFromJsonAsync<List<ExternalFlightData>>(ct);
 
             return result;
         }
@@ -128,9 +131,8 @@ namespace AirTravel.API.Services
             }
             catch (Exception ex)
             {
-                // Логируем ошибку
-                Console.WriteLine($"Error in FlightAggregator: {ex.Message}");
-                throw; // Пробрасываем исключение дальше
+                _logger.LogError($"Error in FlightAggregator: {ex.Message}");
+                throw;
             }
         }
 
@@ -138,14 +140,20 @@ namespace AirTravel.API.Services
         {
             try
             {
-                // Преобразовываем данные из формата внешнего API в унифицированный формат
+                // We convert data from the external API format into a unified format
                 List<Flight> flights = new List<Flight>();
                 foreach (var flightData in flightsData)
                 {
-                    // Реализация маппинга данных
+                    // Mapping Data
                     Flight flight = new Flight
                     {
-                        // Преобразование данных
+                        //FlightId = flightData
+                        ExternalId = flightData.FlightId,
+                        FlightNumber = flightData.FlightNumber,
+                        From = flightData.DepartureAirport,
+                        To = flightData.ArrivalAirport,
+                        DepartureTime = flightData.DepartureTime,
+                        ArrivalTime = flightData.ArrivalTime
                     };
                     flights.Add(flight);
                 }
@@ -153,9 +161,8 @@ namespace AirTravel.API.Services
             }
             catch (Exception ex)
             {
-                // Логируем ошибку
-                Console.WriteLine($"Error in ConvertToUnifiedFormat: {ex.Message}");
-                throw; // Пробрасываем исключение дальше
+                _logger.LogError($"Error in ConvertToUnifiedFormat: {ex.Message}");
+                throw;
             }
         }
     }

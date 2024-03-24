@@ -89,7 +89,7 @@ var logger = services.GetRequiredService<ILogger<Program>>();
 try
 {
     var context = services.GetRequiredService<DataContext>();
-    await context.Database.MigrateAsync();
+    context.Database.Migrate();
     logger.LogInformation("database migrated");
     // await Seed.SeedData(context);
     // logger.LogInformation($"============== {AppName} - state is started =====================");
@@ -97,10 +97,6 @@ try
 catch (Exception ex)
 {
     logger.LogError(ex, "An error occured during migration");
-}
-finally
-{
-    Log.CloseAndFlush();
 }
 Log.Information($"============== AirTravel.API is started =====================");
 app.Run();

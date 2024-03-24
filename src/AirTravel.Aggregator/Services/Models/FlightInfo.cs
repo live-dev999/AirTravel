@@ -22,6 +22,7 @@ namespace AirTravel.Aggregator.Services.Models;
 
 public class FlightInfo : IFlightInfo
 {
+    public string FlightId { get; set; }
     public string FlightNumber { get; set; }
     public string DepartureAirport { get; set; }
     public string ArrivalAirport { get; set; }
