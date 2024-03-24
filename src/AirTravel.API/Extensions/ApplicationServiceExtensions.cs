@@ -15,9 +15,14 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System;
+using System.Diagnostics;
 using AirTravel.Application.Core;
+using AirTravel.Application.Reservations;
 using AirTravel.Application.Tickets;
 using AirTravel.Persistence;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -35,6 +40,7 @@ namespace AirTravel.API.Extensions
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+            Debug.WriteLine($"connection = {config.GetConnectionString("DefaultConnection")}");
             services.AddDbContext<DataContext>(opt =>
             {
                 opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
@@ -56,8 +62,8 @@ namespace AirTravel.API.Extensions
 
             services.AddMediatR(typeof(List.Handler));
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
-            // services.AddFluentValidationAutoValidation();
-            // services.AddValidatorsFromAssemblyContaining<Create>();
+            services.AddFluentValidationAutoValidation();
+            services.AddValidatorsFromAssemblyContaining<Create>();
             return services;
         }
     }

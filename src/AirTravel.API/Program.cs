@@ -15,22 +15,42 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System.Reflection;
 using AirTravel.API.Extensions;
+using AirTravel.Persistence;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+// builder.Configuration.AddUserSecrets(Assembly.GetExecutingAssembly(), true);
+
+builder.Services.AddLogging(loggingBuilder =>
+{
+    // show in console
+    loggingBuilder
+        .AddConsole()
+        // show sql commands
+        .AddFilter(DbLoggerCategory.Database.Command.Name, LogLevel.Information);
+    // show in debug console
+    loggingBuilder.AddDebug();
+});
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddControllers();
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen();
-builder.Host.UseSerilog((context, configuration) =>
-    configuration.ReadFrom.Configuration(context.Configuration));
+builder.Host.UseSerilog(
+    (context, configuration) => configuration.ReadFrom.Configuration(context.Configuration)
+);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

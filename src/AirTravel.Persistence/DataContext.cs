@@ -35,5 +35,14 @@ namespace AirTravel.Persistence
             : base(options) { }
 
         #endregion
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+        //     var interceptor = new DbConnectionInterceptorDerivative();
+
+        //     optionsBuilder.AddInterceptors(interceptor);
+
+            optionsBuilder.UseNpgsql("Host=192.168.0.97;Port=5432;Database=airtravel;Username=postgres;Password=NewPassw0rd");
+        }
     }
 }
