@@ -19,7 +19,19 @@ using System;
 
 namespace AirTravel.Domain;
 
-public class Ticket
+public class Booking
 {
-    public Guid Id { get; set; }
+    public int BookingId { get; set; }
+
+    public int FlightId { get; set; }
+
+    public Flight Flight { get; set; }
+
+    public int PassengerId { get; set; }
+
+    public Passenger Passenger { get; set; }
+
+    public DateTime BookingTime { get; set; }
+
+    public BookingStatus Status { get; set; }
 }

@@ -16,11 +16,24 @@
  */
 
 using System;
+using AirTravel.Domain;
 
-namespace AirTravel.Application.Tickets
+namespace AirTravel.Application.Bookings
 {
-    public class TicketDto
+    public class BookingDto
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
+
+        public int FlightId { get; set; }
+
+        public Flight Flight { get; set; }
+
+        public int PassengerId { get; set; }
+
+        public Passenger Passenger { get; set; }
+
+        public DateTime BookingTime { get; set; }
+
+        public BookingStatus Status { get; set; }
     }
 }

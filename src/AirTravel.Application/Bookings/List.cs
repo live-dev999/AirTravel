@@ -26,13 +26,13 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace AirTravel.Application.Tickets
+namespace AirTravel.Application.Bookings
 {
     public class List
     {
-        public class Query : IRequest<Result<List<TicketDto>>> { }
+        public class Query : IRequest<Result<List<BookingDto>>> { }
 
-        public class Handler : IRequestHandler<Query, Result<List<TicketDto>>>
+        public class Handler : IRequestHandler<Query, Result<List<BookingDto>>>
         {
             private readonly DataContext _context;
             private readonly ILogger _logger;
@@ -45,16 +45,16 @@ namespace AirTravel.Application.Tickets
                 _context = context;
             }
 
-            public async Task<Result<List<TicketDto>>> Handle(
+            public async Task<Result<List<BookingDto>>> Handle(
                 Query request,
                 CancellationToken cancellationToken
             )
             {
-                var tickets = await _context
-                    .Reseravations.ProjectTo<TicketDto>(_mapper.ConfigurationProvider)
+                var bookings = await _context
+                    .Bookings.ProjectTo<BookingDto>(_mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken);
 
-                return Result<List<TicketDto>>.Success(tickets);
+                return Result<List<BookingDto>>.Success(bookings);
             }
         }
     }

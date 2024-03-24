@@ -15,18 +15,21 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System;
 
-using System.Threading;
-using System.Threading.Tasks;
-using AirTravel.Application.Tickets;
-using Microsoft.AspNetCore.Mvc;
+namespace AirTravel.Domain;
 
-namespace AirTravel.API.Controllers
+public class Flight
 {
-    public class TicketController : BaseApiController
-    {
-        [HttpGet] //api/ticket
-        public async Task<IActionResult> GetTicketsAsync(CancellationToken ct) =>
-            HandleResult(await Mediator.Send(new List.Query(), ct));
-    }
+    public int FlightId { get; set; }
+
+    public string From { get; set; }
+
+    public string To { get; set; }
+
+    public DateTime DepartureTime { get; set; }
+
+    public DateTime ArrivalTime { get; set; }
+
+    public decimal Price { get; set; }
 }

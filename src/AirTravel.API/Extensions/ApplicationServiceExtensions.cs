@@ -15,11 +15,9 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using System;
 using System.Diagnostics;
+using AirTravel.Application.Bookings;
 using AirTravel.Application.Core;
-using AirTravel.Application.Reservations;
-using AirTravel.Application.Tickets;
 using AirTravel.Persistence;
 using FluentValidation;
 using FluentValidation.AspNetCore;

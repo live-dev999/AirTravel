@@ -15,11 +15,12 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using System;
+namespace AirTravel.Domain;
 
-namespace AirTravel.Application.Reservations
+public enum BookingStatus
 {
-    public class ReservationDto { 
-        public Guid Id { get; set; }
-    }
+    Pending,
+    WaitPayment,
+    Paid,
+    Cancel
 }

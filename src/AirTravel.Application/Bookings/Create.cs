@@ -23,20 +23,20 @@ using AirTravel.Persistence;
 using FluentValidation;
 using MediatR;
 
-namespace AirTravel.Application.Reservations
+namespace AirTravel.Application.Bookings
 {
     public class Create
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public Reservation Reservation { get; set; }
+            public Booking Booking { get; set; }
         }
 
         public class CommandValidator : AbstractValidator<Command>
         {
             public CommandValidator()
             {
-                RuleFor(x => x.Reservation).SetValidator(new ReservationValidator());
+                RuleFor(x => x.Booking).SetValidator(new BookingValidator());
             }
         }
 
@@ -63,20 +63,20 @@ namespace AirTravel.Application.Reservations
                 //var user = _context.Users.FirstOrDefault(x => x.UserName == _userAccessor.GetUsername());
 
 
-                // var attendee = new ReservationAttendee
+                // var attendee = new BookingAttendee
                 // {
                 //     AppUser = user,
-                //     Reservation = request.Reservation,
+                //     Booking = request.Booking,
                 //     IsHost = true
                 // };
 
-                // request.Reservation.Attendees.Add(attendee);
+                // request.Booking.Attendees.Add(attendee);
 
-                _context.Add(request.Reservation);
+                _context.Add(request.Booking);
 
                 var result = await _context.SaveChangesAsync() > 0;
                 if (!result)
-                    return Result<Unit>.Failure("Failed to create Reservation");
+                    return Result<Unit>.Failure("Failed to create Booking");
                 return Result<Unit>.Success(Unit.Value);
             }
         }

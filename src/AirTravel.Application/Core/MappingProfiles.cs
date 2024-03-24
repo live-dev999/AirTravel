@@ -15,8 +15,7 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using AirTravel.Application.Tickets;
-using AirTravel.Domain;
+using AirTravel.Application.Bookings;
 using AutoMapper;
 
 namespace AirTravel.Application.Core;
@@ -25,7 +24,7 @@ public class MappingProfiles : Profile
 {
     public MappingProfiles()
     {
-        CreateMap<Ticket, Ticket>();
-        CreateMap<Ticket, TicketDto>();
+        CreateMap<AirTravel.Domain.Booking, AirTravel.Domain.Booking>();
+        CreateMap<AirTravel.Domain.Booking, BookingDto>();
     }
 }

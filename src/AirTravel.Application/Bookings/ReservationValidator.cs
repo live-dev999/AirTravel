@@ -15,11 +15,10 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using System;
+using AirTravel.Domain;
+using FluentValidation;
 
-namespace AirTravel.Domain;
-
-public class Reservation
+namespace AirTravel.Application.Bookings
 {
-    public Guid Id { get; set; }
+    public class BookingValidator : AbstractValidator<Booking> { }
 }
