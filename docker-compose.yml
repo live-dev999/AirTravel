@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  sql.data:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sqldatacontainer
+
+  air.api:
+    image: ${DOCKER_REGISTRY-}air-api
+    build:
+        context: .
+        dockerfile: src/AirTravel.API/Dockerfile
+
+  air.aggregator:
+    image: ${DOCKER_REGISTRY-}air-aggregator
+    build:
+        context: .
+        dockerfile: src/AirTravel.Aggregator/Dockerfile
+  
+  
