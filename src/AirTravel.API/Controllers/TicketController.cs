@@ -26,9 +26,6 @@ namespace AirTravel.API.Controllers
     public class TicketController : BaseApiController
     {
         [HttpGet] //api/ticket
-        public async Task<IActionResult> GetTickets(CancellationToken ct)
-        {
-            return HandleResult(await Mediator.Send(new List.Query(), ct));
-        }
+        public async Task<IActionResult> GetTickets(CancellationToken ct) => HandleResult(await Mediator.Send(new List.Query(), ct));
     }
 }
