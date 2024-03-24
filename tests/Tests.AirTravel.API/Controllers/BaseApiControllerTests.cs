@@ -15,24 +15,22 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using AirTravel.API.Controllers;
 using AirTravel.Application.Core;
 using FakeItEasy;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Tests.AirTravel.API.Stub;
 
 namespace Tests.AirTravel.API.Controllers
 {
-    public class BaseApiControllerStub : BaseApiController { }
-
     public class BaseApiControllerTests
     {
         #region Fields
 
         private readonly IMediator _mediator;
         private readonly HttpContext _httpContext;
-        
+
         #endregion
 
 
@@ -47,15 +45,15 @@ namespace Tests.AirTravel.API.Controllers
         }
 
         #endregion
-        
-        
+
+
         #region  Methods
 
         [Fact]
         public void Mediator_Property_Returns_Valid_Instance()
         {
             // Arrange
-            var controller = new BaseApiControllerStub();
+            var controller = new StubBaseApiController();
             controller.ControllerContext.HttpContext = _httpContext;
 
             // Act
@@ -70,7 +68,7 @@ namespace Tests.AirTravel.API.Controllers
         public void HandleResult_Returns_OkObjectResult_With_Valid_Result()
         {
             // Arrange
-            var controller = new BaseApiControllerStub();
+            var controller = new StubBaseApiController();
             var validResult = Result<int>.Success(42);
 
             // Act
@@ -86,7 +84,7 @@ namespace Tests.AirTravel.API.Controllers
         public void HandleResult_Returns_NotFoundResult_When_Result_Is_Null()
         {
             // Arrange
-            var controller = new BaseApiControllerStub();
+            var controller = new StubBaseApiController();
             controller.ControllerContext.HttpContext = _httpContext;
 
             // Act
@@ -100,7 +98,7 @@ namespace Tests.AirTravel.API.Controllers
         public void HandleResult_Returns_NotFoundResult_When_Result_Is_Success_But_Value_Is_Null()
         {
             // Arrange
-            var controller = new BaseApiControllerStub();
+            var controller = new StubBaseApiController();
             var nullValueResult = Result<int?>.Success(null);
 
             // Act
@@ -114,7 +112,7 @@ namespace Tests.AirTravel.API.Controllers
         public void HandleResult_Returns_BadRequestResult_When_Result_Is_Not_Success()
         {
             // Arrange
-            var controller = new BaseApiControllerStub();
+            var controller = new StubBaseApiController();
             var errorResult = Result<int>.Failure("Test error message");
 
             // Act
