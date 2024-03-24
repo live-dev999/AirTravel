@@ -68,7 +68,6 @@ public abstract class BaseApiController : ControllerBase
 
         if (result.IsSeccess && result.Value != null)
         {
-            
             // Add pagination
             HttpContext.Response.AddPaginationHeader(
                 result.Value.CurrentPage,

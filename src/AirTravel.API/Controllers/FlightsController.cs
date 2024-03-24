@@ -16,8 +16,11 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AirTravel.API.Services;
+using AirTravel.Application.Core;
+using AirTravel.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirTravel.API.Controllers
@@ -32,19 +35,28 @@ namespace AirTravel.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetFlights(string from, string to, DateTime date)
+        public async Task<IActionResult> GetFlights(
+            [FromQuery] PagingParams pagingParams, string from, string to, DateTime date)
         {
-            try
-            {
-                var flights = await _flightAggregator.GetFlights(from, to, date);
-                return Ok(flights);
-            }
-            catch (Exception ex)
-            {
-                // Логируем ошибку
-                Console.WriteLine($"Error in FlightsController: {ex.Message}");
-                return StatusCode(500, "Internal server error");
-            }
+            return HandlePagedResult(
+                 Result<PagedList<Flight>>.Success(
+                    await PagedList<Flight>.CreateMemoAsync(
+                       await _flightAggregator.GetFlights(from, to, date),
+                        pagingParams.PageNumber,
+                        pagingParams.PageSize
+                    ))
+                );
+            // try
+            // {
+            //     var flights = await _flightAggregator.GetFlights(from, to, date);
+            //     return Ok(flights);
+            // }
+            // catch (Exception ex)
+            // {
+            //     // Логируем ошибку
+            //     Console.WriteLine($"Error in FlightsController: {ex.Message}");
+            //     return StatusCode(500, "Internal server error");
+            // }
         }
     }
 }

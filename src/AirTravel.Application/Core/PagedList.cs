@@ -51,5 +51,20 @@ namespace AirTravel.Application.Core
 
             return new PagedList<T>(items, count, pageNumber, pageSize);
         }
+
+        public static async Task<PagedList<T>> CreateMemoAsync(
+            IEnumerable<T> source,
+            int pageNumber,
+            int pageSize
+        )
+        {
+            return await Task.Run(() =>
+            {
+                var count = source.Count();
+                var items = source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+
+                return new PagedList<T>(items, count, pageNumber, pageSize);
+            });
+        }
     }
 }
