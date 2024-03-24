@@ -71,7 +71,7 @@ namespace Tests.AirTravel.API.Controllers
             controller.ControllerContext.HttpContext = _httpContext;
 
             // Act
-            var result = await controller.GetTickets(CancellationToken.None);
+            var result = await controller.GetTicketsAsync(CancellationToken.None);
 
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
@@ -90,14 +90,14 @@ namespace Tests.AirTravel.API.Controllers
             controller.ControllerContext.HttpContext = _httpContext;
 
             // Act
-            var result = await controller.GetTickets(CancellationToken.None);
+            var result = await controller.GetTicketsAsync(CancellationToken.None);
 
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
             var model = Assert.IsType<List<TicketDto>>(okResult.Value);
             // Add additional assertions for model validation
         }
-        
+
         #endregion
     }
 }
