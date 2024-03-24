@@ -15,10 +15,8 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using System;
 using AirTravel.Domain;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AirTravel.Persistence
 {
@@ -40,75 +38,23 @@ namespace AirTravel.Persistence
 
         #endregion
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql(
-                "Host=192.168.0.97;Port=5432;Database=airtravel;Username=postgres;Password=NewPassw0rd",
-            options =>
-            {
-                options.SetPostgresVersion(new Version("9.6"));
-            });
+        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        // {
+        //     optionsBuilder.UseNpgsql(
+        //         "Host=localhost;Port=5432;Database=atdb;Username=postgres;Password=postgres",
+            
+        //      o => o.SetPostgresVersion(14, 0));
 
-            base.OnConfiguring(optionsBuilder);
-        }
+        //     base.OnConfiguring(optionsBuilder);
+        // }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasDefaultSchema("public");
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
-
-            // Setup Flight
-            modelBuilder.Entity<Flight>().HasKey(f => f.FlightId);
-
-            modelBuilder.Entity<Flight>().Property(f => f.FlightId).UseSerialColumn();
-
-            modelBuilder.Entity<Flight>().Property(f => f.From).IsRequired();
-
-            modelBuilder.Entity<Flight>().Property(f => f.To).IsRequired();
-
-            modelBuilder.Entity<Flight>().Property(f => f.DepartureTime).IsRequired();
-
-            modelBuilder.Entity<Flight>().Property(f => f.ArrivalTime).IsRequired();
-
-            modelBuilder.Entity<Flight>().Property(f => f.Price).IsRequired();
-
-            // Setup Passenger
-            modelBuilder.Entity<Passenger>().HasKey(p => p.PassengerId);
-
-            modelBuilder.Entity<Passenger>().Property(p => p.PassengerId).UseSerialColumn();
-
-            modelBuilder.Entity<Passenger>().Property(p => p.FirstName).IsRequired();
-
-            modelBuilder.Entity<Passenger>().Property(p => p.LastName).IsRequired();
-
-            modelBuilder.Entity<Passenger>().Property(p => p.Email).IsRequired();
-
-            // Setup Booking
-            modelBuilder.Entity<Booking>().HasKey(b => b.BookingId);
-
-            modelBuilder.Entity<Booking>().Property(b => b.BookingId).UseSerialColumn();
-            
-            modelBuilder
-                .Entity<Booking>()
-                .HasOne(b => b.Flight)
-                .WithMany()
-                .HasForeignKey(b => b.FlightId)
-                .IsRequired();
-
-            modelBuilder
-                .Entity<Booking>()
-                .HasOne(b => b.Passenger)
-                .WithMany()
-                .HasForeignKey(b => b.PassengerId)
-                .IsRequired();
-
-            modelBuilder.Entity<Booking>().Property(b => b.BookingTime).IsRequired();
-
-            var converter = new ValueConverter<BookingStatus, string>(
-                v => v.ToString(),
-                v => (BookingStatus)Enum.Parse(typeof(BookingStatus), v)
-            );
-
-            modelBuilder.Entity<Booking>().Property(s => s.Status).HasConversion(converter);
+            modelBuilder.ApplyConfiguration(new FlightConfiguration());
+            modelBuilder.ApplyConfiguration(new PassengerConfiguration());
+            modelBuilder.ApplyConfiguration(new BookingConfiguration());
         }
     }
 }

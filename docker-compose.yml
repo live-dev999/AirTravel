@@ -1,25 +1,36 @@
 version: '3.7'
 
 services:
+  postgres_exporter:
+    container_name: exporter_container
+    image: prometheuscommunity/postgres-exporter:v0.10.1
 
-  cache.data:
+  postgres-db:
+    container_name: postgres_container
+    image: postgres:14.8-alpine3.18
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4:7.2
+    
+  cache-data:
     image: redis
-    container_name: redisdb
+    container_name: redisdb_container
 
-  sql.data:
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    container_name: sql.data
+  # sql-data:
+  #   image: mcr.microsoft.com/mssql/server:2019-latest
+  #   container_name: sqldata
 
-  air.api:
+  air-api:
     image: ${DOCKER_REGISTRY-}air-api
-    container_name: air.api
+    container_name: air_api_container
     build:
         context: .
         dockerfile: src/AirTravel.API/Dockerfile
 
-  air.aggregator:
+  air-aggregator:
     image: ${DOCKER_REGISTRY-}air-aggregator
-    container_name: air.aggregator
+    container_name: air_aggregator_container
     build:
         context: .
         dockerfile: src/AirTravel.Aggregator/Dockerfile

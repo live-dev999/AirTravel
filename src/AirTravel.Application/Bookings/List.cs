@@ -51,7 +51,7 @@ namespace AirTravel.Application.Bookings
             )
             {
                 var bookings = await _context
-                    .Bookings.ProjectTo<BookingDto>(_mapper.ConfigurationProvider)
+                    .Bookings.AsNoTracking().ProjectTo<BookingDto>(_mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken);
 
                 return Result<List<BookingDto>>.Success(bookings);

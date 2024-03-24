@@ -32,6 +32,10 @@ using Serilog;
 var builder = WebApplication.CreateBuilder(args);
 // builder.Configuration.AddUserSecrets(Assembly.GetExecutingAssembly(), true);
 
+builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+		  .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+          .AddEnvironmentVariables(); // optional extra provider
+
 builder.Services.AddLogging(loggingBuilder =>
 {
     // show in console
@@ -46,12 +50,12 @@ builder.Services.AddLogging(loggingBuilder =>
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddControllers();
-builder.Services.ConfigurePOCO<UrlsConfig>(builder.Configuration.GetSection("urls"));
+builder.Services.ConfigurePOCO<UrlsConfig>(builder.Configuration.GetSection("Urls"));
 builder.Services.AddScoped<IExternalFlightApi,ExternalFlightApi>();
 builder.Services.AddScoped<IFlightAggregator,FlightAggregator>();
 builder.Services.AddHttpClient<IExternalFlightApi, ExternalFlightApi>(client =>
 {
-   client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("urls:AggregatorUrl"));
+   client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("Urls:AggregatorUrl"));
 });
 
 builder.Services.AddApplicationServices(builder.Configuration);
@@ -78,17 +82,25 @@ app.UseSerilogRequestLogging();
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
+var logger = services.GetRequiredService<ILogger<Program>>();
+// string Namespace = typeof(Program).Namespace;
+// string AppName =
+//             Namespace.Substring(Namespace.LastIndexOf('.', Namespace.LastIndexOf('.') - 1) + 1);
 try
 {
     var context = services.GetRequiredService<DataContext>();
-    // var userManager = services.GetRequiredService<UserManager<AppUser>>();
     await context.Database.MigrateAsync();
-    await Seed.SeedData(context);
+    logger.LogInformation("database migrated");
+    // await Seed.SeedData(context);
+    // logger.LogInformation($"============== {AppName} - state is started =====================");
 }
 catch (Exception ex)
 {
-    var logger = services.GetRequiredService<ILogger<Program>>();
     logger.LogError(ex, "An error occured during migration");
 }
-
+finally
+{
+    Log.CloseAndFlush();
+}
+Log.Information($"============== AirTravel.API is started =====================");
 app.Run();

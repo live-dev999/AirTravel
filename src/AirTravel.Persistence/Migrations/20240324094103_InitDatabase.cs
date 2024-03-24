@@ -12,8 +12,12 @@ namespace AirTravel.Persistence.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "public");
+
             migrationBuilder.CreateTable(
                 name: "Flights",
+                schema: "public",
                 columns: table => new
                 {
                     FlightId = table.Column<int>(type: "integer", nullable: false)
@@ -31,6 +35,7 @@ namespace AirTravel.Persistence.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Passengers",
+                schema: "public",
                 columns: table => new
                 {
                     PassengerId = table.Column<int>(type: "integer", nullable: false)
@@ -46,6 +51,7 @@ namespace AirTravel.Persistence.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Booking",
+                schema: "public",
                 columns: table => new
                 {
                     BookingId = table.Column<int>(type: "integer", nullable: false)
@@ -61,12 +67,14 @@ namespace AirTravel.Persistence.Migrations
                     table.ForeignKey(
                         name: "FK_Booking_Flights_FlightId",
                         column: x => x.FlightId,
+                        principalSchema: "public",
                         principalTable: "Flights",
                         principalColumn: "FlightId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Booking_Passengers_PassengerId",
                         column: x => x.PassengerId,
+                        principalSchema: "public",
                         principalTable: "Passengers",
                         principalColumn: "PassengerId",
                         onDelete: ReferentialAction.Cascade);
@@ -74,11 +82,13 @@ namespace AirTravel.Persistence.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Booking_FlightId",
+                schema: "public",
                 table: "Booking",
                 column: "FlightId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Booking_PassengerId",
+                schema: "public",
                 table: "Booking",
                 column: "PassengerId");
         }
@@ -87,13 +97,16 @@ namespace AirTravel.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Booking");
+                name: "Booking",
+                schema: "public");
 
             migrationBuilder.DropTable(
-                name: "Flights");
+                name: "Flights",
+                schema: "public");
 
             migrationBuilder.DropTable(
-                name: "Passengers");
+                name: "Passengers",
+                schema: "public");
         }
     }
 }
