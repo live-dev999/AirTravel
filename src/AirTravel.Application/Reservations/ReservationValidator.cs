@@ -16,24 +16,9 @@
  */
 
 using AirTravel.Domain;
-using Microsoft.EntityFrameworkCore;
+using FluentValidation;
 
-namespace AirTravel.Persistence
+namespace AirTravel.Application.Reservations
 {
-    public class DataContext : DbContext
-    {
-        #region Props
-
-        public DbSet<Reservation> Reseravations { get; set; }
-
-        #endregion
-
-
-        #region Ctors
-
-        public DataContext(DbContextOptions options)
-            : base(options) { }
-
-        #endregion
-    }
+    public class ReservationValidator : AbstractValidator<Reservation> { }
 }

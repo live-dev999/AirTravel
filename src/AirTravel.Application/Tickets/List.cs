@@ -20,11 +20,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using AirTravel.Application.Core;
 using AirTravel.Persistence;
-using MediatR;
-using Microsoft.Extensions.Logging;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace AirTravel.Application.Tickets
 {
@@ -50,10 +50,10 @@ namespace AirTravel.Application.Tickets
                 CancellationToken cancellationToken
             )
             {
-                var tickets = await _context.Tickets
-                .ProjectTo<TicketDto>(_mapper.ConfigurationProvider)
-                .ToListAsync(cancellationToken);
-                
+                var tickets = await _context
+                    .Reseravations.ProjectTo<TicketDto>(_mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken);
+
                 return Result<List<TicketDto>>.Success(tickets);
             }
         }

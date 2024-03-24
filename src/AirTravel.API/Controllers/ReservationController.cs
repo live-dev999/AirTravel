@@ -17,6 +17,7 @@
 
 using System;
 using System.Threading.Tasks;
+using AirTravel.Application.Reservations;
 using AirTravel.Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,13 +26,13 @@ namespace AirTravel.API.Controllers;
 public class ReservationController : BaseApiController
 {
     [HttpPost] //reservation param -  ticket_id & user_id
-    public IActionResult Reservation()
+    public async Task<IActionResult> ReservationAsync([FromBody] Reservation reservation)
     {
-        throw new NotImplementedException();
+        return HandleResult(await Mediator.Send(new Create.Command { Reservation = reservation }));
     }
 
     [HttpPut("{id}")] //api/reservation/{id}
-    public Task<IActionResult> EditReservation(Guid id, [FromBody] Reseravation reservation)
+    public Task<IActionResult> EditReservation(Guid id, [FromBody] Reservation reservation)
     {
         throw new NotImplementedException();
     }

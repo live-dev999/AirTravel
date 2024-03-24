@@ -19,6 +19,7 @@ using System;
 
 namespace AirTravel.Domain;
 
-public class Reseravation { 
+public class Reservation
+{
     public Guid Id { get; set; }
 }

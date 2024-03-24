@@ -15,25 +15,11 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using AirTravel.Domain;
-using Microsoft.EntityFrameworkCore;
+using System;
 
-namespace AirTravel.Persistence
+namespace AirTravel.Application.Reservations
 {
-    public class DataContext : DbContext
-    {
-        #region Props
-
-        public DbSet<Reservation> Reseravations { get; set; }
-
-        #endregion
-
-
-        #region Ctors
-
-        public DataContext(DbContextOptions options)
-            : base(options) { }
-
-        #endregion
+    public class ReservationDto { 
+        public Guid Id { get; set; }
     }
 }
