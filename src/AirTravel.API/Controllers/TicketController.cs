@@ -15,19 +15,20 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace AirTravel.Application.Core;
 
-public class AppException
+using System.Threading;
+using System.Threading.Tasks;
+using AirTravel.Application.Tickets;
+using Microsoft.AspNetCore.Mvc;
+
+namespace AirTravel.API.Controllers
 {
-
-    public AppException(int statusCode, string message, string details = null)
+    public class TicketController : BaseApiController
     {
-        Details = details;
-        Message = message;
-        StatusCode = statusCode;
+        [HttpGet] //api/ticket
+        public async Task<IActionResult> GetTickets(CancellationToken ct)
+        {
+            return HandleResult(await Mediator.Send(new List.Query(), ct));
+        }
     }
-
-    public int StatusCode { get; set; }
-    public string Message { get; set; }
-    public string Details { get; set; }
 }

@@ -15,31 +15,50 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System.Runtime.CompilerServices;
 using AirTravel.Application.Core;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace AirTravel.API.Controllers
+[assembly: InternalsVisibleTo("Tests.AirTravel.API")]
+
+namespace AirTravel.API.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+public  abstract class BaseApiController : ControllerBase
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class BaseApiController : ControllerBase
+    #region Fields
+
+    private IMediator _mediator;
+
+    #endregion
+
+
+    #region Props
+
+    public IMediator Mediator =>
+        _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
+
+    #endregion
+
+
+    #region Methods
+
+    public IActionResult HandleResult<T>(Result<T> result)
     {
-        #region Methods
+        if (result == null)
+            return NotFound();
 
-        protected IActionResult HandleResult<T>(Result<T> result)
-        {
-            if (result == null)
-                return NotFound();
+        if (result.IsSeccess && result.Value != null)
+            return Ok(result.Value);
 
-            if (result.IsSeccess && result.Value != null)
-                return Ok(result.Value);
+        if (result.IsSeccess && result.Value == null)
+            return NotFound();
 
-            if (result.IsSeccess && result.Value == null)
-                return NotFound();
-
-            return BadRequest(result.Error);
-        }
-
-        #endregion
+        return BadRequest(result.Error);
     }
+
+    #endregion
 }

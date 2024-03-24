@@ -1,4 +1,4 @@
-﻿/*
+/*
  *   Copyright (c) 2024 Dzianis Prokharchyk
 
  *   This program is free software: you can redistribute it and/or modify
@@ -15,9 +15,23 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace AirTravel.Application;
+using AirTravel.Application.Core;
+using AutoMapper;
 
-public class Class1
+namespace IntegratonTests.AirTravel.Application;
+
+public class MappingProfilesTests
 {
+    [Fact]
+    public void MappingProfiles_ConfigurationsAreValid()
+    {
+        // Arrange
+        var configuration = new MapperConfiguration(cfg =>
+        {
+            cfg.AddProfile<MappingProfiles>();
+        });
 
+        // Act & Assert
+        configuration.AssertConfigurationIsValid();
+    }
 }

@@ -15,19 +15,12 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace AirTravel.Application.Core;
+using System;
 
-public class AppException
+namespace AirTravel.Application.Tickets
 {
-
-    public AppException(int statusCode, string message, string details = null)
+    public class TicketDto
     {
-        Details = details;
-        Message = message;
-        StatusCode = statusCode;
+        public Guid Id { get; set; }
     }
-
-    public int StatusCode { get; set; }
-    public string Message { get; set; }
-    public string Details { get; set; }
 }

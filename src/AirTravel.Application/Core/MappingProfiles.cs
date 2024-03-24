@@ -15,19 +15,17 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using AirTravel.Application.Tickets;
+using AirTravel.Domain;
+using AutoMapper;
+
 namespace AirTravel.Application.Core;
 
-public class AppException
+public class MappingProfiles : Profile
 {
-
-    public AppException(int statusCode, string message, string details = null)
+    public MappingProfiles()
     {
-        Details = details;
-        Message = message;
-        StatusCode = statusCode;
+        CreateMap<Ticket, Ticket>();
+        CreateMap<Ticket, TicketDto>();
     }
-
-    public int StatusCode { get; set; }
-    public string Message { get; set; }
-    public string Details { get; set; }
 }

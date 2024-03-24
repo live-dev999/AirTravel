@@ -15,19 +15,25 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace AirTravel.Application.Core;
+using AirTravel.Domain;
+using Microsoft.EntityFrameworkCore;
 
-public class AppException
+namespace AirTravel.Persistence
 {
-
-    public AppException(int statusCode, string message, string details = null)
+    public class DataContext : DbContext
     {
-        Details = details;
-        Message = message;
-        StatusCode = statusCode;
-    }
+        #region Props
 
-    public int StatusCode { get; set; }
-    public string Message { get; set; }
-    public string Details { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
+
+        #endregion
+
+
+        #region Ctors
+
+        public DataContext(DbContextOptions options)
+            : base(options) { }
+
+        #endregion
+    }
 }
