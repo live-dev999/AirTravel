@@ -71,9 +71,6 @@ namespace AirTravel.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
-
                     b.Property<string>("To")
                         .IsRequired()
                         .HasColumnType("text");

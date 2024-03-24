@@ -38,7 +38,7 @@ namespace AirTravel.Persistence
 
             builder.Property(f => f.ArrivalTime).IsRequired();
 
-            builder.Property(f => f.Price).IsRequired();
+            // builder.Property(f => f.Price).IsRequired();
         }
     }
 }

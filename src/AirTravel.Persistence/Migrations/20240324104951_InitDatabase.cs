@@ -25,8 +25,7 @@ namespace AirTravel.Persistence.Migrations
                     From = table.Column<string>(type: "text", nullable: false),
                     To = table.Column<string>(type: "text", nullable: false),
                     DepartureTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    ArrivalTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Price = table.Column<decimal>(type: "numeric", nullable: false)
+                    ArrivalTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {

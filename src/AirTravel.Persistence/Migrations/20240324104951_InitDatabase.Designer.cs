@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AirTravel.Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240324094103_InitDatabase")]
+    [Migration("20240324104951_InitDatabase")]
     partial class InitDatabase
     {
         /// <inheritdoc />
@@ -73,9 +73,6 @@ namespace AirTravel.Persistence.Migrations
                     b.Property<string>("From")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
 
                     b.Property<string>("To")
                         .IsRequired()

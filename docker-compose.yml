@@ -7,7 +7,7 @@ services:
 
   postgres-db:
     container_name: postgres_container
-    image: postgres:14.8-alpine3.18
+    image: postgres:15.6
 
   pgadmin:
     container_name: pgadmin_container
