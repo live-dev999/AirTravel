@@ -43,8 +43,11 @@ namespace AirTravel.Persistence
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseNpgsql(
-                "Host=192.168.0.97;Port=5432;Database=airtravel;Username=postgres;Password=NewPassw0rd"
-            );
+                "Host=192.168.0.97;Port=5432;Database=airtravel;Username=postgres;Password=NewPassw0rd",
+            options =>
+            {
+                options.SetPostgresVersion(new Version("9.6"));
+            });
 
             base.OnConfiguring(optionsBuilder);
         }
@@ -55,6 +58,8 @@ namespace AirTravel.Persistence
 
             // Setup Flight
             modelBuilder.Entity<Flight>().HasKey(f => f.FlightId);
+
+            modelBuilder.Entity<Flight>().Property(f => f.FlightId).UseSerialColumn();
 
             modelBuilder.Entity<Flight>().Property(f => f.From).IsRequired();
 
@@ -69,6 +74,8 @@ namespace AirTravel.Persistence
             // Setup Passenger
             modelBuilder.Entity<Passenger>().HasKey(p => p.PassengerId);
 
+            modelBuilder.Entity<Passenger>().Property(p => p.PassengerId).UseSerialColumn();
+
             modelBuilder.Entity<Passenger>().Property(p => p.FirstName).IsRequired();
 
             modelBuilder.Entity<Passenger>().Property(p => p.LastName).IsRequired();
@@ -78,6 +85,8 @@ namespace AirTravel.Persistence
             // Setup Booking
             modelBuilder.Entity<Booking>().HasKey(b => b.BookingId);
 
+            modelBuilder.Entity<Booking>().Property(b => b.BookingId).UseSerialColumn();
+            
             modelBuilder
                 .Entity<Booking>()
                 .HasOne(b => b.Flight)

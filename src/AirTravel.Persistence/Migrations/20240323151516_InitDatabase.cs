@@ -7,20 +7,17 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AirTravel.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class AddMainEntityes : Migration
+    public partial class InitDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Reseravations");
-
             migrationBuilder.CreateTable(
                 name: "Flights",
                 columns: table => new
                 {
                     FlightId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     From = table.Column<string>(type: "text", nullable: false),
                     To = table.Column<string>(type: "text", nullable: false),
                     DepartureTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -37,7 +34,7 @@ namespace AirTravel.Persistence.Migrations
                 columns: table => new
                 {
                     PassengerId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false)
@@ -52,7 +49,7 @@ namespace AirTravel.Persistence.Migrations
                 columns: table => new
                 {
                     BookingId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     FlightId = table.Column<int>(type: "integer", nullable: false),
                     PassengerId = table.Column<int>(type: "integer", nullable: false),
                     BookingTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -97,17 +94,6 @@ namespace AirTravel.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Passengers");
-
-            migrationBuilder.CreateTable(
-                name: "Reseravations",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Reseravations", x => x.Id);
-                });
         }
     }
 }

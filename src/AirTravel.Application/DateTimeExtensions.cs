@@ -16,24 +16,29 @@
  */
 
 using System;
-using AirTravel.Domain;
 
-namespace AirTravel.Application.Bookings
+namespace AirTravel.Application
 {
-    public class BookingDto
+    public static class DateTimeExtensions
+{
+    public static DateTime? SetKindUtc(this DateTime? dateTime)
     {
-        public int BookingId { get; set; }
-
-        public int FlightId { get; set; }
-
-        public Flight Flight { get; set; }
-
-        public int PassengerId { get; set; }
-
-        public Passenger Passenger { get; set; }
-
-        public DateTime BookingTime { get; set; }
-
-        public BookingStatus Status { get; set; }
+        if (dateTime.HasValue)
+        {
+            return dateTime.Value.SetKindUtc();
+        }
+        else
+        {
+            return null;
+        }
     }
+    public static DateTime SetKindUtc(this DateTime dateTime)
+    {
+        if (dateTime.Kind == DateTimeKind.Utc) 
+        { 
+            return dateTime; 
+            }
+        return DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
+    }
+}
 }

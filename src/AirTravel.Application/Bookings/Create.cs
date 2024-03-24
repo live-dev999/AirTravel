@@ -15,6 +15,7 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using AirTravel.Application.Core;
@@ -22,6 +23,7 @@ using AirTravel.Domain;
 using AirTravel.Persistence;
 using FluentValidation;
 using MediatR;
+using Microsoft.VisualBasic;
 
 namespace AirTravel.Application.Bookings
 {
@@ -69,14 +71,43 @@ namespace AirTravel.Application.Bookings
                 //     Booking = request.Booking,
                 //     IsHost = true
                 // };
-
+                var newFlight = new Flight()
+                {
+                    From = "Start",
+                    To = "End",
+                    DepartureTime = DateTime.Now.AddMonths(1).SetKindUtc(),
+                    ArrivalTime = DateTime.Now.AddMonths(1).AddHours(4).SetKindUtc(),
+                };
+                var flightEntity = _context.Add(newFlight);
+                // var result1 = await _context.SaveChangesAsync() > 0;
+                // if (!result1)
+                //     return Result<Unit>.Failure("Failed to create Booking");
                 // request.Booking.Attendees.Add(attendee);
+                var newPassanger = request.Booking.Passenger;
+                
+                var passenger = new Passenger
+                {
+                    LastName = newPassanger.LastName,
+                    FirstName = newPassanger.FirstName,
+                    Email = newPassanger.Email
+                };
+
+                var passEntity = _context.Add(passenger);
+                // var result2 = await _context.SaveChangesAsync() > 0;
+                
+                // if (!result2)
+                //     return Result<Unit>.Failure("Failed to create Booking");
+                
+                request.Booking.Flight = flightEntity.Entity;
+                request.Booking.Passenger = passEntity.Entity;
+                request.Booking.BookingTime = DateTime.Now.SetKindUtc();
 
                 _context.Add(request.Booking);
 
                 var result = await _context.SaveChangesAsync() > 0;
                 if (!result)
                     return Result<Unit>.Failure("Failed to create Booking");
+
                 return Result<Unit>.Success(Unit.Value);
             }
         }

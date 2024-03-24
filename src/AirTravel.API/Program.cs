@@ -15,6 +15,7 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System;
 using System.Reflection;
 using AirTravel.API.Extensions;
 using AirTravel.Persistence;
@@ -63,4 +64,20 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.MapDefaultControllerRoute();
 app.UseSerilogRequestLogging();
+
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+try
+{
+    var context = services.GetRequiredService<DataContext>();
+    // var userManager = services.GetRequiredService<UserManager<AppUser>>();
+    await context.Database.MigrateAsync();
+    await Seed.SeedData(context);
+}
+catch (Exception ex)
+{
+    var logger = services.GetRequiredService<ILogger<Program>>();
+    logger.LogError(ex, "An error occured during migration");
+}
+
 app.Run();
