@@ -106,7 +106,7 @@ docker-compose -f docker-compose.yml -f docker-compose.override.yml up
 ```
 if you use docker-compose for Apply Silicon CPU - M1/M2/M3 (ARM)
 ```
-docker-compose -f docker-compose.arm.yml -f docker-compose.override.yml up
+docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.override.arm.yml up
 ```
 
 

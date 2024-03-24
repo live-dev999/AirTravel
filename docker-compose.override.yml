@@ -1,0 +1,53 @@
+version: '3.7'
+
+networks:
+  frontend:
+  backend:
+
+services:
+
+  cache.data:
+    ports:
+      - "6377:6379"  
+    networks:
+      - backend 
+
+  sql.data:
+    environment:
+      - SA_PASSWORD=your@Password
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Developer
+    ports:
+      - "5433:1433"
+    networks:
+      - backend
+
+  air.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionString=Server=sql.data;Initial Catalog=AirDb;Persist Security Info=False;User ID=sa;Password=your@Password;Connection Timeout=30;
+      #- ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "5001:8080"
+      # - "10001:443"
+    #volumes:
+    #  - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    depends_on:
+      - sql.data
+    networks:
+      - backend
+  
+  air.aggregator:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      # - ConnectionString=Server=sql.data;Initial Catalog=AirDb;Persist Security Info=False;User ID=sa;Password=your@Password;Connection Timeout=30;
+      # - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "5003:8080"
+      # - "10003:443"
+    #volumes:
+    #  - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    # depends_on:
+      # - sql.data
+    networks:
+      - backend
