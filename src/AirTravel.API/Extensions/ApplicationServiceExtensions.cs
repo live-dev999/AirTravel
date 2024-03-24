@@ -15,6 +15,7 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System;
 using System.Diagnostics;
 using AirTravel.Application.Bookings;
 using AirTravel.Application.Core;
@@ -30,6 +31,23 @@ namespace AirTravel.API.Extensions
 {
     public static class ApplicationServiceExtensions
     {
+        public static TConfig ConfigurePOCO<TConfig>(
+            this IServiceCollection services,
+            IConfiguration configuration
+        )
+            where TConfig : class, new()
+        {
+            if (services == null)
+                throw new ArgumentNullException(nameof(services));
+            if (configuration == null)
+                throw new ArgumentNullException(nameof(configuration));
+
+            var config = new TConfig();
+            configuration.Bind(config);
+            services.AddSingleton(config);
+            return config;
+        }
+
         public static IServiceCollection AddApplicationServices(
             this IServiceCollection services,
             IConfiguration config

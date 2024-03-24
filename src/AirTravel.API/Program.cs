@@ -18,6 +18,8 @@
 using System;
 using System.Reflection;
 using AirTravel.API.Extensions;
+using AirTravel.API.Services;
+using AirTravel.Config;
 using AirTravel.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -44,7 +46,16 @@ builder.Services.AddLogging(loggingBuilder =>
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddControllers();
+builder.Services.ConfigurePOCO<UrlsConfig>(builder.Configuration.GetSection("urls"));
+builder.Services.AddScoped<IExternalFlightApi,ExternalFlightApi>();
+builder.Services.AddScoped<IFlightAggregator,FlightAggregator>();
+builder.Services.AddHttpClient<IExternalFlightApi, ExternalFlightApi>(client =>
+{
+   client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("urls:AggregatorUrl"));
+});
+
 builder.Services.AddApplicationServices(builder.Configuration);
+
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
