@@ -31,9 +31,15 @@ namespace Tests.AirTravel.API.Controllers
 {
     public class TicketControllerTests
     {
+        #region Fields
+
         private readonly IMediator _mediator;
         private readonly HttpContext _httpContext;
         private readonly List<TicketDto> _tickets;
+
+        #endregion
+
+        #region Ctors
 
         public TicketControllerTests()
         {
@@ -50,20 +56,17 @@ namespace Tests.AirTravel.API.Controllers
             };
         }
 
+        #endregion
+
+        #region Methods
+
         [Fact]
         public async Task GetTickets_WhenCalled_ReturnsOkResultWithTickets()
         {
             // Arrange
             var controller = new TicketController();
-            A.CallTo(
-                    () =>
-                        _mediator.Send(
-                            A<List.Query>.Ignored,
-                            A<CancellationToken>.Ignored
-                        )
-                )
-                .Returns(Task.FromResult(
-                    Result<List<TicketDto>>.Success(_tickets)));
+            A.CallTo(() => _mediator.Send(A<List.Query>.Ignored, A<CancellationToken>.Ignored))
+                .Returns(Task.FromResult(Result<List<TicketDto>>.Success(_tickets)));
 
             controller.ControllerContext.HttpContext = _httpContext;
 
@@ -82,15 +85,8 @@ namespace Tests.AirTravel.API.Controllers
             // Arrange
             var controller = new TicketController();
             controller.ControllerContext.HttpContext = _httpContext;
-            A.CallTo(
-                    () =>
-                        _mediator.Send(
-                            A<List.Query>.Ignored,
-                            A<CancellationToken>.Ignored
-                        )
-                )
-                .Returns(Task.FromResult(
-                    Result<List<TicketDto>>.Success(_tickets)));
+            A.CallTo(() => _mediator.Send(A<List.Query>.Ignored, A<CancellationToken>.Ignored))
+                .Returns(Task.FromResult(Result<List<TicketDto>>.Success(_tickets)));
             controller.ControllerContext.HttpContext = _httpContext;
 
             // Act
@@ -101,5 +97,7 @@ namespace Tests.AirTravel.API.Controllers
             var model = Assert.IsType<List<TicketDto>>(okResult.Value);
             // Add additional assertions for model validation
         }
+        
+        #endregion
     }
 }
