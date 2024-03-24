@@ -15,13 +15,12 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AirTravel.API.Controllers;
+using AirTravel.Application.Bookings;
 using AirTravel.Application.Core;
-using AirTravel.Application.Tickets;
 using FakeItEasy;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -29,19 +28,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Tests.AirTravel.API.Controllers
 {
-    public class TicketControllerTests
+    public class BookingControllerTests
     {
         #region Fields
 
         private readonly IMediator _mediator;
         private readonly HttpContext _httpContext;
-        private readonly List<TicketDto> _tickets;
+        private readonly List<BookingDto> _bookings;
 
         #endregion
 
         #region Ctors
 
-        public TicketControllerTests()
+        public BookingControllerTests()
         {
             _mediator = A.Fake<IMediator>();
 
@@ -49,10 +48,10 @@ namespace Tests.AirTravel.API.Controllers
             A.CallTo(() => _httpContext.RequestServices.GetService(typeof(IMediator)))
                 .Returns(_mediator);
 
-            _tickets = new List<TicketDto>
+            _bookings = new List<BookingDto>
             {
-                new TicketDto { Id = Guid.NewGuid() },
-                new TicketDto { Id = Guid.NewGuid() }
+                new BookingDto { BookingId = 1 },
+                new BookingDto { BookingId = 2 }
             };
         }
 
@@ -61,40 +60,40 @@ namespace Tests.AirTravel.API.Controllers
         #region Methods
 
         [Fact]
-        public async Task GetTickets_WhenCalled_ReturnsOkResultWithTickets()
+        public async Task GetBookings_WhenCalled_ReturnsOkResultWithBookings()
         {
             // Arrange
-            var controller = new TicketController();
+            var controller = new BookingController();
             A.CallTo(() => _mediator.Send(A<List.Query>.Ignored, A<CancellationToken>.Ignored))
-                .Returns(Task.FromResult(Result<List<TicketDto>>.Success(_tickets)));
+                .Returns(Task.FromResult(Result<List<BookingDto>>.Success(_bookings)));
 
             controller.ControllerContext.HttpContext = _httpContext;
 
             // Act
-            var result = await controller.GetTicketsAsync(CancellationToken.None);
+            var result = await controller.GetBookingsAsync(CancellationToken.None);
 
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
-            var returnedTickets = Assert.IsAssignableFrom<IEnumerable<TicketDto>>(okResult.Value);
-            Assert.Equal(_tickets, returnedTickets);
+            var returnedBookings = Assert.IsAssignableFrom<IEnumerable<BookingDto>>(okResult.Value);
+            Assert.Equal(_bookings, returnedBookings);
         }
 
         [Fact]
-        public async Task GetTickets_ReturnsValidModel()
+        public async Task GetBookings_ReturnsValidModel()
         {
             // Arrange
-            var controller = new TicketController();
+            var controller = new BookingController();
             controller.ControllerContext.HttpContext = _httpContext;
             A.CallTo(() => _mediator.Send(A<List.Query>.Ignored, A<CancellationToken>.Ignored))
-                .Returns(Task.FromResult(Result<List<TicketDto>>.Success(_tickets)));
+                .Returns(Task.FromResult(Result<List<BookingDto>>.Success(_bookings)));
             controller.ControllerContext.HttpContext = _httpContext;
 
             // Act
-            var result = await controller.GetTicketsAsync(CancellationToken.None);
+            var result = await controller.GetBookingsAsync(CancellationToken.None);
 
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
-            var model = Assert.IsType<List<TicketDto>>(okResult.Value);
+            var model = Assert.IsType<List<BookingDto>>(okResult.Value);
             // Add additional assertions for model validation
         }
 
