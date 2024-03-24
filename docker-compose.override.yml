@@ -28,7 +28,7 @@ services:
       - ConnectionString=Server=sql.data;Initial Catalog=AirDb;Persist Security Info=False;User ID=sa;Password=your@Password;Connection Timeout=30;
       #- ASPNETCORE_URLS=https://+:443;http://+:80
     ports:
-      - "5001:80"
+      - "5001:8080"
       # - "10001:443"
     #volumes:
     #  - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
@@ -43,7 +43,7 @@ services:
       # - ConnectionString=Server=sql.data;Initial Catalog=AirDb;Persist Security Info=False;User ID=sa;Password=your@Password;Connection Timeout=30;
       # - ASPNETCORE_URLS=https://+:443;http://+:80
     ports:
-      - "5003:80"
+      - "5003:8080"
       # - "10003:443"
     #volumes:
     #  - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
