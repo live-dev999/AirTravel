@@ -75,8 +75,8 @@ namespace AirTravel.Application.Bookings
                 {
                     From = "Start",
                     To = "End",
-                    DepartureTime = DateTime.Now.AddMonths(1).SetKindUtc(),
-                    ArrivalTime = DateTime.Now.AddMonths(1).AddHours(4).SetKindUtc(),
+                    DepartureTime = DateTime.UtcNow.AddMonths(1),
+                    ArrivalTime = DateTime.UtcNow.AddMonths(1).AddHours(4),
                 };
                 var flightEntity = _context.Add(newFlight);
                 // var result1 = await _context.SaveChangesAsync() > 0;
@@ -84,7 +84,7 @@ namespace AirTravel.Application.Bookings
                 //     return Result<Unit>.Failure("Failed to create Booking");
                 // request.Booking.Attendees.Add(attendee);
                 var newPassanger = request.Booking.Passenger;
-                
+
                 var passenger = new Passenger
                 {
                     LastName = newPassanger.LastName,
@@ -94,13 +94,13 @@ namespace AirTravel.Application.Bookings
 
                 var passEntity = _context.Add(passenger);
                 // var result2 = await _context.SaveChangesAsync() > 0;
-                
+
                 // if (!result2)
                 //     return Result<Unit>.Failure("Failed to create Booking");
-                
+
                 request.Booking.Flight = flightEntity.Entity;
                 request.Booking.Passenger = passEntity.Entity;
-                request.Booking.BookingTime = DateTime.Now.SetKindUtc();
+                request.Booking.BookingTime = DateTime.UtcNow.SetKindUtc();
 
                 _context.Add(request.Booking);
 

@@ -147,7 +147,7 @@ namespace AirTravel.API.Services
                     // Mapping Data
                     Flight flight = new Flight
                     {
-                        //FlightId = flightData
+                        FlightId  = new Random().Next(10000),
                         ExternalId = flightData.FlightId,
                         FlightNumber = flightData.FlightNumber,
                         From = flightData.DepartureAirport,

@@ -77,6 +77,7 @@ var app = builder.Build();
 }
 
 app.UseHttpsRedirection();
+app.UseCors("CorsPolicy");
 app.MapDefaultControllerRoute();
 app.UseSerilogRequestLogging();
 
@@ -99,4 +100,5 @@ catch (Exception ex)
     logger.LogError(ex, "An error occured during migration");
 }
 Log.Information($"============== AirTravel.API is started =====================");
+
 app.Run();
