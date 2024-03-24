@@ -15,7 +15,6 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using System.Collections.Generic;
 using AirTravel.Application.Core;
 using AirTravel.Application.Tickets;
 using AirTravel.Persistence;

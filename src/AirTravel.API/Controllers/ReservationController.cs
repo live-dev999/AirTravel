@@ -15,18 +15,30 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-
-using System.Threading;
+using System;
 using System.Threading.Tasks;
-using AirTravel.Application.Tickets;
+using AirTravel.Domain;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AirTravel.API.Controllers
+namespace AirTravel.API.Controllers;
+
+public class ReservationController : BaseApiController
 {
-    public class TicketController : BaseApiController
+    [HttpPost] //reservation param -  ticket_id & user_id
+    public IActionResult Reservation()
     {
-        [HttpGet] //api/ticket
-        public async Task<IActionResult> GetTicketsAsync(CancellationToken ct) =>
-            HandleResult(await Mediator.Send(new List.Query(), ct));
+        throw new NotImplementedException();
+    }
+
+    [HttpPut("{id}")] //api/reservation/{id}
+    public Task<IActionResult> EditReservation(Guid id, [FromBody] Reseravation reservation)
+    {
+        throw new NotImplementedException();
+    }
+
+    [HttpDelete("{id}")] //api/activities/{id}
+    public IActionResult Delete(Guid id)
+    {
+        throw new NotImplementedException();
     }
 }
