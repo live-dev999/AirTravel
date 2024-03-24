@@ -86,21 +86,21 @@ var logger = services.GetRequiredService<ILogger<Program>>();
 // string Namespace = typeof(Program).Namespace;
 // string AppName =
 //             Namespace.Substring(Namespace.LastIndexOf('.', Namespace.LastIndexOf('.') - 1) + 1);
-// try
-// {
-//     var context = services.GetRequiredService<DataContext>();
-//     await context.Database.MigrateAsync();
-//     logger.LogInformation("database migrated");
-//     // await Seed.SeedData(context);
-//     // logger.LogInformation($"============== {AppName} - state is started =====================");
-// }
-// catch (Exception ex)
-// {
-//     logger.LogError(ex, "An error occured during migration");
-// }
-// finally
-// {
-//     Log.CloseAndFlush();
-// }
+try
+{
+    var context = services.GetRequiredService<DataContext>();
+    await context.Database.MigrateAsync();
+    logger.LogInformation("database migrated");
+    // await Seed.SeedData(context);
+    // logger.LogInformation($"============== {AppName} - state is started =====================");
+}
+catch (Exception ex)
+{
+    logger.LogError(ex, "An error occured during migration");
+}
+finally
+{
+    Log.CloseAndFlush();
+}
 Log.Information($"============== AirTravel.API is started =====================");
 app.Run();
