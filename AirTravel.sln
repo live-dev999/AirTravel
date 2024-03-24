@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegratonTests.AirTravel.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegratonTests.AirTravel.Persistence", "tests\IntegratonTests.AirTravel.Persistence\IntegratonTests.AirTravel.Persistence.csproj", "{6E3E0E36-221C-4A33-8149-A581FD6CD3DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirTravel.Aggregator", "src\AirTravel.Aggregator\AirTravel.Aggregator.csproj", "{C2DCEEEB-6EFA-4C20-AE9B-5575BEF900A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -88,6 +90,10 @@ Global
 		{6E3E0E36-221C-4A33-8149-A581FD6CD3DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E3E0E36-221C-4A33-8149-A581FD6CD3DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E3E0E36-221C-4A33-8149-A581FD6CD3DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2DCEEEB-6EFA-4C20-AE9B-5575BEF900A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2DCEEEB-6EFA-4C20-AE9B-5575BEF900A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2DCEEEB-6EFA-4C20-AE9B-5575BEF900A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2DCEEEB-6EFA-4C20-AE9B-5575BEF900A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B54F1E43-D499-4561-8EE6-7954B96C769A} = {BA15041C-2EE6-44BF-947E-EA824B1EF320}
@@ -102,5 +108,6 @@ Global
 		{41884C3B-377E-4313-8ABE-CE809CC296C2} = {571A2488-6595-41AE-9DD5-DD830A61F66D}
 		{04A9EE95-D85F-4460-93DA-DFE839B30EE7} = {571A2488-6595-41AE-9DD5-DD830A61F66D}
 		{6E3E0E36-221C-4A33-8149-A581FD6CD3DD} = {571A2488-6595-41AE-9DD5-DD830A61F66D}
+		{C2DCEEEB-6EFA-4C20-AE9B-5575BEF900A5} = {BA15041C-2EE6-44BF-947E-EA824B1EF320}
 	EndGlobalSection
 EndGlobal

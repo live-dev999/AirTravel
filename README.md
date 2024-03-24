@@ -7,17 +7,18 @@ The project is a test task. The full description of the title can be read here [
 
 ## Build info
 Azure Build Status (master)/(dev)
+
 | dev   |      master      |
 |----------|:-------------:|
-|  |  |
-
+| [![Build Status](https://dev.azure.com/live-dev/AirTravel/_apis/build/status%2FAirTravel?branchName=dev)](https://dev.azure.com/live-dev/AirTravel/_build/latest?definitionId=1&branchName=dev) | [![Build Status](https://dev.azure.com/live-dev/AirTravel/_apis/build/status%2FAirTravel?branchName=master)](https://dev.azure.com/live-dev/AirTravel/_build/latest?definitionId=1&branchName=master) |
 
 
 GitHub Build Status (master)/(dev)
 
 | dev   |      master      |
 |----------|:-------------:|
-|  |  |
+|  [![AirTravel](https://github.com/live-dev999/AirTravel/actions/workflows/github-ci.yml/badge.svg?branch=dev)](https://github.com/live-dev999/AirTravel/actions/workflows/github-ci.yml) | [![AirTravel](https://github.com/live-dev999/AirTravel/actions/workflows/github-ci.yml/badge.svg?branch=master)](https://github.com/live-dev999/AirTravel/actions/workflows/github-ci.yml) |
+
 
 ## **Preinstalled software**
 ### Windows:

@@ -1,0 +1,6 @@
+@AirTravel.Aggregator_HostAddress = http://localhost:5250
+
+GET {{AirTravel.Aggregator_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
