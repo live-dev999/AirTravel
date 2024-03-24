@@ -16,6 +16,7 @@
  */
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AirTravel.Application.Core;
@@ -30,9 +31,12 @@ namespace AirTravel.Application.Bookings
 {
     public class List
     {
-        public class Query : IRequest<Result<List<BookingDto>>> { }
+        public class Query : IRequest<Result<PagedList<BookingDto>>>
+        {
+            public PagingParams Params { get; set; }
+        }
 
-        public class Handler : IRequestHandler<Query, Result<List<BookingDto>>>
+        public class Handler : IRequestHandler<Query, Result<PagedList<BookingDto>>>
         {
             private readonly DataContext _context;
             private readonly ILogger _logger;
@@ -45,16 +49,24 @@ namespace AirTravel.Application.Bookings
                 _context = context;
             }
 
-            public async Task<Result<List<BookingDto>>> Handle(
+            public async Task<Result<PagedList<BookingDto>>> Handle(
                 Query request,
                 CancellationToken cancellationToken
             )
             {
-                var bookings = await _context
-                    .Bookings.AsNoTracking().ProjectTo<BookingDto>(_mapper.ConfigurationProvider)
-                    .ToListAsync(cancellationToken);
+                var query = _context
+                    .Bookings.AsNoTracking()
+                    .OrderByDescending(_ => _.BookingTime)
+                    .ProjectTo<BookingDto>(_mapper.ConfigurationProvider)
+                    .AsQueryable();
 
-                return Result<List<BookingDto>>.Success(bookings);
+                return Result<PagedList<BookingDto>>.Success(
+                    await PagedList<BookingDto>.CreateAsync(
+                        query,
+                        request.Params.PageNumber,
+                        request.Params.PageSize
+                    )
+                );
             }
         }
     }

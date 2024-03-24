@@ -25,8 +25,8 @@ namespace AirTravel.Persistence
 {
     public class Seed
     {
-        // public static async Task SeedData(DataContext context)
-        // {
+        public static async Task SeedData(DataContext context)
+        {
             // if (context.Bookings.Any())
             //     return;
 
@@ -116,6 +116,6 @@ namespace AirTravel.Persistence
 
             // await context.Bookings.AddRangeAsync(bookings);
             // await context.SaveChangesAsync();
-        // }
+        }
     }
 }

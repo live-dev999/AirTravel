@@ -67,6 +67,12 @@ namespace AirTravel.Persistence.Migrations
                     b.Property<DateTime>("DepartureTime")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("ExternalId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FlightNumber")
+                        .HasColumnType("text");
+
                     b.Property<string>("From")
                         .IsRequired()
                         .HasColumnType("text");

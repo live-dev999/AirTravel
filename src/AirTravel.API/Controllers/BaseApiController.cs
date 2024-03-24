@@ -15,7 +15,9 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System;
 using System.Runtime.CompilerServices;
+using AirTravel.API.Extensions;
 using AirTravel.Application.Core;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +29,7 @@ namespace AirTravel.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public  abstract class BaseApiController : ControllerBase
+public abstract class BaseApiController : ControllerBase
 {
     #region Fields
 
@@ -38,8 +40,7 @@ public  abstract class BaseApiController : ControllerBase
 
     #region Props
 
-    public IMediator Mediator =>
-        _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
+    public IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
 
     #endregion
 
@@ -54,6 +55,30 @@ public  abstract class BaseApiController : ControllerBase
         if (result.IsSeccess && result.Value != null)
             return Ok(result.Value);
 
+        if (result.IsSeccess && result.Value == null)
+            return NotFound();
+
+        return BadRequest(result.Error);
+    }
+
+    public IActionResult HandlePagedResult<T>(Result<PagedList<T>> result)
+    {
+        if (result == null)
+            return NotFound();
+
+        if (result.IsSeccess && result.Value != null)
+        {
+            
+            // Add pagination
+            HttpContext.Response.AddPaginationHeader(
+                result.Value.CurrentPage,
+                result.Value.PageSize,
+                result.Value.TotalCount,
+                result.Value.TotalPages
+            );
+
+            return Ok(result.Value);
+        }
         if (result.IsSeccess && result.Value == null)
             return NotFound();
 

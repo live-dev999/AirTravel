@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AirTravel.Application.Bookings;
+using AirTravel.Application.Core;
 using AirTravel.Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,8 +30,8 @@ namespace AirTravel.API.Controllers
     public class BookingController : BaseApiController
     {
         [HttpGet] //api/booking
-        public async Task<IActionResult> GetBookingsAsync(CancellationToken ct) =>
-            HandleResult(await Mediator.Send(new List.Query(), ct));
+        public async Task<IActionResult> GetBookingsAsync([FromQuery] PagingParams pagingParams ,CancellationToken ct) =>
+            HandlePagedResult(await Mediator.Send(new List.Query(){Params = pagingParams}, ct));
 
         [HttpPost] //bookings param -  ticket_id & user_id
         public async Task<IActionResult> ReservationAsync([FromBody] Booking bookings)

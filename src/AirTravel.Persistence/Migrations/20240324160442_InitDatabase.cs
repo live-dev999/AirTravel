@@ -25,7 +25,9 @@ namespace AirTravel.Persistence.Migrations
                     From = table.Column<string>(type: "text", nullable: false),
                     To = table.Column<string>(type: "text", nullable: false),
                     DepartureTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    ArrivalTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    ArrivalTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    FlightNumber = table.Column<string>(type: "text", nullable: true),
+                    ExternalId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
