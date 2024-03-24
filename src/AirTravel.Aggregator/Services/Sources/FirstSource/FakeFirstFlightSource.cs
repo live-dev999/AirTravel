@@ -50,7 +50,24 @@ public class FakeFirstFlightSource : IFakeFirstFlightSource
 
 
     #region Ctors
-    public FakeFirstFlightSource() { }
+    public FakeFirstFlightSource() {
+        //for test
+        var count = new Random().Next(100);
+        for (int i = 0; i < count; i++)
+        {
+            _flightInfos.Add(
+                new FlightInfo()
+            {
+                FlightId = Guid.NewGuid().ToString(),
+                FlightNumber = Utils.KeyGenerator.Generate(5),
+                ArrivalAirport = "New YorK"+$" {i+1}",
+                DepartureAirport = "Washington"+$" {i+1}",
+                DepartureTime = DateTime.UtcNow.AddMonths(2),
+                ArrivalTime = DateTime.UtcNow.AddMonths(1).AddDays(2)
+            } );
+        }
+        
+     }
 
     #endregion
 
