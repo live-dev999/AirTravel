@@ -59,7 +59,7 @@ export default function FlightListItem({ flight }: Props) {
                 <Button as={Link} to={`/flights/${flight.id}`}
                     color='teal'
                     floated='right'
-                    content='View' />
+                    content='Reserve' />
             </Segment>
         </SegmentGroup>
         // <Item key={flight.id}>
