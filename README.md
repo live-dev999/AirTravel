@@ -1,6 +1,8 @@
 # AirTravel 
 Flight search API aggregator
 
+<!-- ![logo](/design/logo.jpg?raw=true) { height=200px } -->
+<img width="250" src="design/logo.jpg?raw=true">
 
 ## About project
 The project is a test task. The full description of the title can be read here [EN](/docs/TASK-EN.MD) of [RU](/docs/TASK-RU.MD)
@@ -75,7 +77,7 @@ Create docker-compose.yaml file in root folder with code:
 version: '3.7'
 
 services:
-  sql.data:
+  sql-data:
     image: mcr.microsoft.com/mssql/server:2019-latest
     container_name: sqldatacontainer
 ```
@@ -86,7 +88,7 @@ For Intel / Amd CPU
 version: '3.7'
 
 services:
-  sql.data:
+  sql-data:
     image: mcr.microsoft.com/mssql/server:2019-latest
     container_name: sqldatacontainer
 ```
@@ -95,7 +97,7 @@ For Apply Silicon CPU(M1/M2/M3)
 version: '3.7'
 
 services:
-  sql.data:
+  sql-data:
     image: mcr.microsoft.com/azure-sql-edge
     container_name: sqldatacontainer
 ```
@@ -106,7 +108,7 @@ docker-compose -f docker-compose.yml -f docker-compose.override.yml up
 ```
 if you use docker-compose for Apply Silicon CPU - M1/M2/M3 (ARM)
 ```
-docker-compose -f docker-compose.arm.yml -f docker-compose.override.yml up
+docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.override.arm.yml up
 ```
 
 

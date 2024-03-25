@@ -1,0 +1,95 @@
+<mxfile host="Electron" modified="2024-03-25T06:55:55.730Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.0.4 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="MoLpO8wZwXO2bfHUR5YU" version="24.0.4" type="device">
+  <diagram name="Page-1" id="NdNrNRFiFfCuOIKZ5M-m">
+    <mxGraphModel dx="1466" dy="1103" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="czpSq-taWrPshDuCwECO-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;" edge="1" parent="1" source="czpSq-taWrPshDuCwECO-7" target="czpSq-taWrPshDuCwECO-26">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="940" y="310" />
+              <mxPoint x="1050" y="310" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <UserObject label="API" data_from_form="{&quot;node_title&quot;:&quot;\&quot;API\&quot;&quot;,&quot;old_titles&quot;:[&quot;\&quot;API\&quot;&quot;,&quot;\&quot;API\&quot;&quot;],&quot;sfc&quot;:&quot;&quot;,&quot;midas&quot;:&quot;&quot;}" id="czpSq-taWrPshDuCwECO-7">
+          <mxCell style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+            <mxGeometry x="820" y="230" width="120" height="60" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&quot;Source Data 1&quot;" data_from_form="{&quot;node_title&quot;:&quot;\&quot;Source Data 1\&quot;&quot;,&quot;old_titles&quot;:[&quot;Cell #9&quot;,&quot;\&quot;Source Data 1\&quot;&quot;],&quot;sfc&quot;:&quot;&quot;,&quot;midas&quot;:&quot;&quot;}" id="czpSq-taWrPshDuCwECO-8">
+          <mxCell style="ellipse;shape=cloud;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+            <mxGeometry x="980" y="30" width="170" height="80" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&quot;Source Data 2&quot;" data_from_form="{&quot;node_title&quot;:&quot;\&quot;Source Data 2\&quot;&quot;,&quot;old_titles&quot;:[&quot;\&quot;Source Data 1\&quot;&quot;,&quot;\&quot;Source Data 2\&quot;&quot;],&quot;sfc&quot;:&quot;&quot;,&quot;midas&quot;:&quot;&quot;}" id="czpSq-taWrPshDuCwECO-9">
+          <mxCell style="ellipse;shape=cloud;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+            <mxGeometry x="1130" y="10" width="170" height="80" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&quot;Source Data N&quot;" data_from_form="{&quot;node_title&quot;:&quot;\&quot;Source Data N\&quot;&quot;,&quot;old_titles&quot;:[&quot;\&quot;Source Data 2\&quot;&quot;,&quot;\&quot;Source Data N\&quot;&quot;],&quot;sfc&quot;:&quot;&quot;,&quot;midas&quot;:&quot;&quot;}" id="czpSq-taWrPshDuCwECO-10">
+          <mxCell style="ellipse;shape=cloud;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+            <mxGeometry x="1275" y="110" width="170" height="80" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="czpSq-taWrPshDuCwECO-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;curved=1;" edge="1" parent="1" source="czpSq-taWrPshDuCwECO-13" target="czpSq-taWrPshDuCwECO-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="czpSq-taWrPshDuCwECO-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;" edge="1" parent="1" source="czpSq-taWrPshDuCwECO-13" target="czpSq-taWrPshDuCwECO-8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1090" y="150" />
+              <mxPoint x="905" y="150" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <UserObject label="Aggregator&lt;div&gt;API&lt;/div&gt;" data_from_form="{&quot;node_title&quot;:&quot;\&quot;API\&quot;&quot;,&quot;old_titles&quot;:[&quot;\&quot;API\&quot;&quot;,&quot;\&quot;API\&quot;&quot;],&quot;sfc&quot;:&quot;&quot;,&quot;midas&quot;:&quot;&quot;}" id="czpSq-taWrPshDuCwECO-13">
+          <mxCell style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+            <mxGeometry x="1030" y="220" width="120" height="50" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="czpSq-taWrPshDuCwECO-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.55;entryY=0.95;entryDx=0;entryDy=0;entryPerimeter=0;curved=1;" edge="1" parent="1" source="czpSq-taWrPshDuCwECO-13" target="czpSq-taWrPshDuCwECO-10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1090" y="180" />
+              <mxPoint x="1264" y="180" />
+              <mxPoint x="1264" y="306" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="czpSq-taWrPshDuCwECO-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.55;entryY=0.95;entryDx=0;entryDy=0;entryPerimeter=0;curved=1;" edge="1" parent="1" source="czpSq-taWrPshDuCwECO-13" target="czpSq-taWrPshDuCwECO-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="czpSq-taWrPshDuCwECO-16" value="Internal Cache" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="820" y="340" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="czpSq-taWrPshDuCwECO-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;entryX=0.45;entryY=-0.083;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="czpSq-taWrPshDuCwECO-7" target="czpSq-taWrPshDuCwECO-16">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="807.04" y="400" as="sourcePoint" />
+            <mxPoint x="806.04" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="czpSq-taWrPshDuCwECO-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="czpSq-taWrPshDuCwECO-21" target="czpSq-taWrPshDuCwECO-7">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="820" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="czpSq-taWrPshDuCwECO-21" value="Client" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="530" y="300" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="czpSq-taWrPshDuCwECO-25" value="postgress" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="540" width="60" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="czpSq-taWrPshDuCwECO-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="czpSq-taWrPshDuCwECO-26" target="czpSq-taWrPshDuCwECO-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="czpSq-taWrPshDuCwECO-26" value="booking" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="990" y="350" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="czpSq-taWrPshDuCwECO-31" value="CQRS" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="438" width="60" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

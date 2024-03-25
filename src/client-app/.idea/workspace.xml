@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="baddca25-7f69-45f9-87e6-434cf89f0e80" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../docker-compose.override.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../docker-compose.override.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/agent.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/agent.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/layout/NavBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout/NavBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/models/activity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/models/flight.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/router/Routes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/router/Routes.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/stores/activityStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/stores/flightStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/stores/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/stores/store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/activities/dashboard/ActivityDashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/flights/dashboard/FlightDashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/activities/dashboard/ActivityFilters.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/flights/dashboard/FlightFilters.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/activities/dashboard/ActivityList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/flights/dashboard/FlightList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/activities/dashboard/ActivityListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/flights/dashboard/FlightListItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/activities/details/ActivityDetailedChat.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/flights/details/FlightDetailedChat.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/activities/details/ActivityDetailedHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/flights/details/FlightDetailedHeader.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/activities/details/ActivityDetailedInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/flights/details/FlightDetailedInfo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/activities/details/ActivityDetailedSidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/flights/details/FlightDetailedSidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/activities/details/ActivityDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/flights/details/FlightDetails.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/activities/form/ActivityForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/flights/form/FlightForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/errors/NotFound.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/errors/NotFound.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/errors/TestErrors.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/errors/TestErrors.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/home/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/home/Home.tsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2e9sPqANQUwvPqbyeyURtRn2Nzn" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceFlight.OpenProjectViewOnStart": "true",
+    "RunOnceFlight.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "feature/client",
+    "last_opened_file_path": "/Users/denisp/Developer/AzureDevOps/live-dev-repo/AirTravel/src/client-app",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "ts.external.directory.path": "/Users/denisp/Developer/AzureDevOps/live-dev-repo/AirTravel/src/client-app/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="baddca25-7f69-45f9-87e6-434cf89f0e80" name="Changes" comment="" />
+      <created>1711328107648</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1711328107648</updated>
+      <workItem from="1711328109101" duration="1688000" />
+      <workItem from="1711329806863" duration="270000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

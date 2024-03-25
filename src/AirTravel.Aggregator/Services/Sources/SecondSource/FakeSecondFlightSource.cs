@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AirTravel.Aggregator.Services.Models;
 
@@ -25,10 +26,26 @@ namespace AirTravel.Aggregator.Services.Sources.SecondSource;
 public class FakeSecondFlightSource : IFakeSecondFlightSource
 {
     #region Fields
-    private readonly List<IFlightInfo> _flightInfos = new List<IFlightInfo>
+    private  static List<IFlightInfo> _flightInfos = new List<IFlightInfo>
     {
-        new FlightInfo() { FlightNumber = Guid.NewGuid().ToString() },
-        new FlightInfo() { FlightNumber = Guid.NewGuid().ToString() },
+        new FlightInfo()
+        {
+            FlightId = Guid.NewGuid().ToString(),
+            FlightNumber = Utils.KeyGenerator.Generate(9),
+            ArrivalAirport = "Minsk",
+            DepartureAirport = "Gomel",
+            DepartureTime = DateTime.UtcNow.AddMonths(1),
+            ArrivalTime = DateTime.UtcNow.AddMonths(1).AddDays(1)
+        },
+        new FlightInfo()
+        {
+            FlightId = Guid.NewGuid().ToString(),
+            FlightNumber = Utils.KeyGenerator.Generate(5),
+            ArrivalAirport = "New Orleans",
+            DepartureAirport = "Washington",
+            DepartureTime = DateTime.UtcNow.AddMonths(2),
+            ArrivalTime = DateTime.UtcNow.AddMonths(1).AddDays(2)
+        },
     };
     #endregion
     
@@ -65,6 +82,17 @@ public class FakeSecondFlightSource : IFakeSecondFlightSource
         return await Task.FromResult(
             _flightInfos
         );
-        // throw new NotImplementedException();
+    }
+
+    public async Task<IFlightInfo> SetReservationAsync(IFlightInfo tiket)
+    {
+         return await Task.Run(()=>{
+            // if(_flightInfos==null)
+            //     Console.WriteLine($" _flightInfos is null >!!!!! ");
+            // Console.WriteLine($"Count _flightInfos: {_flightInfos.Count}");
+            var result =_flightInfos.FirstOrDefault(_=>_.FlightId == tiket.FlightId);
+            result.Status = Status.WaitPayment;
+            return result;
+        });
     }
 }

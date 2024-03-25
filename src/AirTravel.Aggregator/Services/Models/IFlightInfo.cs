@@ -16,15 +16,18 @@
  */
 
 using System;
+using AirTravel.Aggregator.Services.Models;
 
 namespace AirTravel.Aggregator.Services;
 
 public interface IFlightInfo
 {
+    string FlightId { get; set; }
     string FlightNumber { get; set; }
     string DepartureAirport { get; set; }
     string ArrivalAirport { get; set; }
     DateTime DepartureTime { get; set; }
     DateTime ArrivalTime { get; set; }
     FlightInfoSource FlightInfoSource { get; set; }
+    Status Status { get; set; }
 }
