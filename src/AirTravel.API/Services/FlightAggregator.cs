@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AirTravel.Domain;
 using Microsoft.Extensions.Logging;
@@ -60,9 +61,9 @@ namespace AirTravel.API.Services
 
         public async Task<Flight> SetupReservation(Flight flight)
         {
-            var exData = MappingEx(flight);
+            var exData = flight.ToFlightData();
             var res = await _externalFlightApi.SetupReservation(exData);
-            return Mapping(res);
+            return res.ToFlight();
         }
 
         private List<Flight> ConvertToUnifiedFormat(List<ExternalFlightData> flightsData)
@@ -70,50 +71,13 @@ namespace AirTravel.API.Services
             try
             {
                 // We convert data from the external API format into a unified format
-                List<Flight> flights = new List<Flight>();
-                foreach (var flightData in flightsData)
-                {
-                    Flight flight = Mapping(flightData);
-                    flights.Add(flight);
-                }
-                return flights;
+                return flightsData.ToFlight().ToList();
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Error in ConvertToUnifiedFormat: {ex.Message}");
                 throw;
             }
-        }
-
-        private static Flight Mapping(ExternalFlightData flightData)
-        {
-            // Mapping Data
-            return new Flight
-            {
-                Id = new Random().Next(10000),
-                ExternalId = flightData.FlightId,
-                FlightNumber = flightData.FlightNumber,
-                From = flightData.DepartureAirport,
-                To = flightData.ArrivalAirport,
-                DepartureTime = flightData.DepartureTime,
-                ArrivalTime = flightData.ArrivalTime,
-                Status = flightData.Status
-            };
-        }
-
-        private static ExternalFlightData MappingEx(Flight flightData)
-        {
-            // Mapping Data
-            return new ExternalFlightData
-            {
-                FlightId = flightData.ExternalId,
-                FlightNumber = flightData.FlightNumber,
-                DepartureAirport = flightData.From,
-                ArrivalAirport = flightData.To,
-                DepartureTime = flightData.DepartureTime,
-                ArrivalTime = flightData.ArrivalTime,
-                Status = flightData.Status
-            };
         }
     }
 }
