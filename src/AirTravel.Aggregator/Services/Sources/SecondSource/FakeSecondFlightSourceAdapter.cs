@@ -38,8 +38,8 @@ public class FakeSecondFlightSourceAdapter : IFlightDataAdapter
         return flightsFromSource.Cast<IFlightInfo>().ToList();
     }
 
-    public Task<IFlightInfo> SetReservationAsync(IFlightInfo tiket)
+    public async Task<IFlightInfo> SetReservationAsync(IFlightInfo tiket)
     {
-        throw new NotImplementedException();
+        return await source.SetReservationAsync(tiket);
     }
 }

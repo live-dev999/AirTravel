@@ -15,14 +15,72 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System;
+using System.Linq;
+using System.Reflection;
+using AirTravel.API.Extensions;
+using AirTravel.API.Services;
+using AirTravel.Config;
+using AirTravel.Persistence;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using AirTravel.StartupTasks.DatabaseInitializer;
+using Serilog;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// builder.Configuration.AddUserSecrets(Assembly.GetExecutingAssembly(), true);
+
+builder
+    .Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    .AddJsonFile(
+        $"appsettings.{builder.Environment.EnvironmentName}.json",
+        optional: true,
+        reloadOnChange: true
+    )
+    .AddEnvironmentVariables(); // optional extra provider
+
+builder.Services.AddLogging(loggingBuilder =>
+{
+    // show in console
+    loggingBuilder
+        .AddConsole()
+        // show sql commands
+        .AddFilter(DbLoggerCategory.Database.Command.Name, LogLevel.Information);
+    // show in debug console
+    loggingBuilder.AddDebug();
+});
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddControllers();
+builder.Services.ConfigurePOCO<UrlsConfig>(builder.Configuration.GetSection("Urls"));
+builder.Services.AddScoped<IExternalFlightApi, ExternalFlightApi>();
+builder.Services.AddScoped<IFlightAggregator, FlightAggregator>();
+builder.Services.AddHttpClient<IExternalFlightApi, ExternalFlightApi>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("Urls:AggregatorUrl"));
+});
+
+builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddDatabaseInitializer<DataContext>();
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen();
+builder.Host.UseSerilog(
+    (context, configuration) => configuration.ReadFrom.Configuration(context.Configuration)
+);
 
 var app = builder.Build();
+
+// var scope = app.Services.CreateScope();
+// var context = scope.ServiceProvider.GetRequiredService<DataContext>();
+// SeedData.SeedAsync(context).Wait();
+
 
 // Configure the HTTP request pipeline.
 // if (app.Environment.IsDevelopment())
@@ -32,30 +90,31 @@ var app = builder.Build();
 }
 
 app.UseHttpsRedirection();
+app.UseCors("CorsPolicy");
+app.MapDefaultControllerRoute();
+app.UseSerilogRequestLogging();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+// using var scope = app.Services.CreateScope();
+// var services = scope.ServiceProvider;
+// var logger = services.GetRequiredService<ILogger<Program>>();
+// try
+// {
+//     var context = services.GetRequiredService<DataContext>();
+//     var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+//     if (pendingMigrations.Any())
+//     {
+//         await context.Database.MigrateAsync();
+//     }
+
+//     logger.LogInformation("database migrated");
+//     // await Seed.SeedData(context);
+//     // logger.LogInformation($"============== {AppName} - state is started =====================");
+// }
+// catch (Exception ex)
+// {
+//     logger.LogError(ex, "An error occured during migration");
+// }
+// Log.Information($"============== AirTravel.API is started =====================");
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

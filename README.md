@@ -77,7 +77,7 @@ Create docker-compose.yaml file in root folder with code:
 version: '3.7'
 
 services:
-  sql.data:
+  sql-data:
     image: mcr.microsoft.com/mssql/server:2019-latest
     container_name: sqldatacontainer
 ```
@@ -88,7 +88,7 @@ For Intel / Amd CPU
 version: '3.7'
 
 services:
-  sql.data:
+  sql-data:
     image: mcr.microsoft.com/mssql/server:2019-latest
     container_name: sqldatacontainer
 ```
@@ -97,7 +97,7 @@ For Apply Silicon CPU(M1/M2/M3)
 version: '3.7'
 
 services:
-  sql.data:
+  sql-data:
     image: mcr.microsoft.com/azure-sql-edge
     container_name: sqldatacontainer
 ```

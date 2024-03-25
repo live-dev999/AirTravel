@@ -24,4 +24,5 @@ namespace AirTravel.Aggregator.Services.Sources.FirstSource;
 public interface IFakeFirstFlightSource
 {
     Task<List<IFlightInfo>> SearchFlightsAsync(string from, string to, DateTime date);
+    Task<IFlightInfo> SetReservationAsync(IFlightInfo tiket);
 }

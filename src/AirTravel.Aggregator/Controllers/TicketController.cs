@@ -31,7 +31,8 @@ namespace AirTravel.Aggregator.Controllers
     {
         private readonly IFlightAggregator _aggregator;
 
-        public TicketController(IFlightAggregator aggregator, ILogger<TicketController> logger):base(logger)
+        public TicketController(IFlightAggregator aggregator, ILogger<TicketController> logger)
+            : base(logger)
         {
             this._aggregator = aggregator;
         }
@@ -40,7 +41,7 @@ namespace AirTravel.Aggregator.Controllers
         public async Task<IActionResult> SearchTicketsAsync(CancellationToken ct) =>
             HandleResult(
                 Result<List<IFlightInfo>>.Success(
-                    await _aggregator.SearchFlightsAsync("", "", DateTime.Now)
+                    await _aggregator.SearchFlightsAsync("", "", DateTime.UtcNow)
                 ),
                 ct
             );
@@ -49,9 +50,10 @@ namespace AirTravel.Aggregator.Controllers
         public async Task<IActionResult> SetReservationAsync(
             [FromBody] FlightInfo tiket,
             CancellationToken ct
-        ) => HandleResult(
+        ) =>
+            HandleResult(
                 Result<IFlightInfo>.Success(
-                    await _aggregator.SetReservationAsync(tiket, DateTime.Now)
+                    await _aggregator.SetReservationAsync(tiket, DateTime.UtcNow)
                 ),
                 ct
             );
