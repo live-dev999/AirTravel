@@ -100,8 +100,7 @@ namespace AirTravel.API.Services
         {
             // TODO: update this line
             var ct = new CancellationToken();
-            var json = JsonConvert.SerializeObject(externalFlightData
-             ,
+            var json = JsonConvert.SerializeObject(externalFlightData,
               new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver()
@@ -118,8 +117,6 @@ namespace AirTravel.API.Services
             );
 
             var result = await response.Content.ReadFromJsonAsync<ExternalFlightData>(ct);
-
-            // TODO: reset cache
             _cache.Clear();
 
             return result;
