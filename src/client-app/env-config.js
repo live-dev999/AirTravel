@@ -15,13 +15,8 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace AirTravel.Domain;
-
-public enum Status
-{
-    Free,
-    Pending,
-    WaitPayment,
-    Paid,
-    Cancel,
+window._env_ = {
+  Identity_URL: "http://localhost:5001",
+  Client_URL: "http://localhost:3003",
+  SignalRHub_URl: "http://localhost:5103/chathub",
 }

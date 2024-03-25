@@ -15,13 +15,18 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace AirTravel.Domain;
+import React from "react";
+import { Dimmer, Loader } from "semantic-ui-react";
 
-public enum Status
-{
-    Free,
-    Pending,
-    WaitPayment,
-    Paid,
-    Cancel,
+interface Props {
+    inverted?: boolean;
+    content?: string;
+}
+
+export default function LoadingComponent({ inverted, content = 'Loading...' }: Props) {
+    return (
+        <Dimmer active={true} inverted={inverted}>
+            <Loader content={content} />
+        </Dimmer>
+    )
 }

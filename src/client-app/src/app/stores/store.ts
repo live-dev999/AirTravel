@@ -15,13 +15,22 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace AirTravel.Domain;
+import { useContext, createContext } from "react";
+import FlightStore from "./flightStore";
+import CommonStore from "./commonStore";
 
-public enum Status
-{
-    Free,
-    Pending,
-    WaitPayment,
-    Paid,
-    Cancel,
+interface Store {
+    flightStore: FlightStore;
+    commonStore: CommonStore
+}
+
+export const store: Store = {
+    flightStore: new FlightStore(),
+    commonStore: new CommonStore()
+}
+
+export const StoreContext = createContext(store)
+
+export function useStore() {
+    return useContext(StoreContext);
 }

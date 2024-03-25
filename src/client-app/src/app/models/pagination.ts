@@ -15,13 +15,19 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace AirTravel.Domain;
+export interface Pagination {
+    currentPage: number
+    itemsPerPage: number
+    totalItems: number
+    totalPages: number
+}
 
-public enum Status
-{
-    Free,
-    Pending,
-    WaitPayment,
-    Paid,
-    Cancel,
+export class PaginatedResult<T>{
+    data: T;
+    pagination: Pagination
+    
+    constructor(data: T, pagination: Pagination) {
+        this.data = data;
+        this.pagination = pagination;
+    }
 }

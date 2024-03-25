@@ -15,13 +15,22 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace AirTravel.Domain;
+import { Link } from "react-router-dom";
+import { Button, Container, Header, Image, Segment } from "semantic-ui-react";
 
-public enum Status
-{
-    Free,
-    Pending,
-    WaitPayment,
-    Paid,
-    Cancel,
+export default function HomePage() {
+    return (
+
+        <Segment inverted vertical textAlign='center' className="masthead">
+            <Container text>
+                <Header as='h1' inverted>
+                    <Image size='medium' src='/assets/logo.png' alt='logo' style={{ marginButtom: 12 }} />
+                </Header>
+                <Header as='h2' inverted content='Welcom to AirTravel' />
+                <Button as={Link} to='/flights' size='huge' inverted>
+                    Go to AirTravel!
+                </Button>
+            </Container>
+        </Segment>
+    )
 }

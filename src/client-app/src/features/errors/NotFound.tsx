@@ -15,13 +15,22 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace AirTravel.Domain;
+import { Link } from "react-router-dom";
+import { Button, Header, Icon, Segment } from "semantic-ui-react";
 
-public enum Status
-{
-    Free,
-    Pending,
-    WaitPayment,
-    Paid,
-    Cancel,
+export default function NotFound() {
+    return (
+        <Segment placeholder>
+            <Header icon>
+                <Icon name='search' />
+                Oops - we've looked everywhere but  could not find what you are  looking for!
+            </Header>
+            <Segment>
+                <Button as={Link} to='/flights' >
+                    return to flights page
+                </Button>
+            </Segment>
+        </Segment>
+
+    )
 }

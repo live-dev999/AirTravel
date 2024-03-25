@@ -15,13 +15,18 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace AirTravel.Domain;
+import { makeAutoObservable } from "mobx";
+import ServerError from "../models/errorServer";
 
-public enum Status
-{
-    Free,
-    Pending,
-    WaitPayment,
-    Paid,
-    Cancel,
+export default class CommonStore {
+    error: ServerError | null = null;
+
+    constructor() {
+        makeAutoObservable(this);
+    }
+    
+    setServerError(error: ServerError) {
+        this.error = error;
+    }
+
 }
