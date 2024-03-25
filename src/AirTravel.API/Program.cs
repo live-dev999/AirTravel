@@ -16,6 +16,7 @@
  */
 
 using System;
+using System.Linq;
 using System.Reflection;
 using AirTravel.API.Extensions;
 using AirTravel.API.Services;
@@ -27,14 +28,21 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using AirTravel.StartupTasks.DatabaseInitializer;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
 // builder.Configuration.AddUserSecrets(Assembly.GetExecutingAssembly(), true);
 
-builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-		  .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
-          .AddEnvironmentVariables(); // optional extra provider
+builder
+    .Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    .AddJsonFile(
+        $"appsettings.{builder.Environment.EnvironmentName}.json",
+        optional: true,
+        reloadOnChange: true
+    )
+    .AddEnvironmentVariables(); // optional extra provider
 
 builder.Services.AddLogging(loggingBuilder =>
 {
@@ -51,15 +59,15 @@ builder.Services.AddLogging(loggingBuilder =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddControllers();
 builder.Services.ConfigurePOCO<UrlsConfig>(builder.Configuration.GetSection("Urls"));
-builder.Services.AddScoped<IExternalFlightApi,ExternalFlightApi>();
-builder.Services.AddScoped<IFlightAggregator,FlightAggregator>();
+builder.Services.AddScoped<IExternalFlightApi, ExternalFlightApi>();
+builder.Services.AddScoped<IFlightAggregator, FlightAggregator>();
 builder.Services.AddHttpClient<IExternalFlightApi, ExternalFlightApi>(client =>
 {
-   client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("Urls:AggregatorUrl"));
+    client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("Urls:AggregatorUrl"));
 });
 
 builder.Services.AddApplicationServices(builder.Configuration);
-
+builder.Services.AddDatabaseInitializer<DataContext>();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
@@ -68,6 +76,11 @@ builder.Host.UseSerilog(
 );
 
 var app = builder.Build();
+
+// var scope = app.Services.CreateScope();
+// var context = scope.ServiceProvider.GetRequiredService<DataContext>();
+// SeedData.SeedAsync(context).Wait();
+
 
 // Configure the HTTP request pipeline.
 // if (app.Environment.IsDevelopment())
@@ -81,24 +94,27 @@ app.UseCors("CorsPolicy");
 app.MapDefaultControllerRoute();
 app.UseSerilogRequestLogging();
 
-using var scope = app.Services.CreateScope();
-var services = scope.ServiceProvider;
-var logger = services.GetRequiredService<ILogger<Program>>();
-// string Namespace = typeof(Program).Namespace;
-// string AppName =
-//             Namespace.Substring(Namespace.LastIndexOf('.', Namespace.LastIndexOf('.') - 1) + 1);
-try
-{
-    var context = services.GetRequiredService<DataContext>();
-    context.Database.Migrate();
-    logger.LogInformation("database migrated");
-    // await Seed.SeedData(context);
-    // logger.LogInformation($"============== {AppName} - state is started =====================");
-}
-catch (Exception ex)
-{
-    logger.LogError(ex, "An error occured during migration");
-}
-Log.Information($"============== AirTravel.API is started =====================");
+// using var scope = app.Services.CreateScope();
+// var services = scope.ServiceProvider;
+// var logger = services.GetRequiredService<ILogger<Program>>();
+// try
+// {
+//     var context = services.GetRequiredService<DataContext>();
+//     var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
+
+//     if (pendingMigrations.Any())
+//     {
+//         await context.Database.MigrateAsync();
+//     }
+
+//     logger.LogInformation("database migrated");
+//     // await Seed.SeedData(context);
+//     // logger.LogInformation($"============== {AppName} - state is started =====================");
+// }
+// catch (Exception ex)
+// {
+//     logger.LogError(ex, "An error occured during migration");
+// }
+// Log.Information($"============== AirTravel.API is started =====================");
 
 app.Run();

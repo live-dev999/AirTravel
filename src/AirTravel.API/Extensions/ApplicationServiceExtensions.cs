@@ -50,24 +50,22 @@ namespace AirTravel.API.Extensions
 
         public static IServiceCollection AddApplicationServices(
             this IServiceCollection services,
-            IConfiguration config
+            IConfiguration configuration
         )
         {
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
-            var defaultConnectionString =config["ConnectionString"];
+            var defaultConnectionString =configuration["ConnectionString"];
+
+            //for debug
             Console.WriteLine($"connection = {defaultConnectionString}");
-            services.AddDbContext<DataContext>(opt =>
+
+            
+            services.AddDbContext<DataContext>(options =>
             {
-                opt.UseNpgsql(
-                defaultConnectionString,
-                 o => o.SetPostgresVersion(14, 0)
-                    // ,options =>
-                    // {
-                    //     options.SetPostgresVersion(new Version("9.6"));
-                    // }
-                    );
+                options.UseNpgsql(configuration["ConnectionString"]);
+                options.EnableSensitiveDataLogging();
             });
             services.AddCors(opt =>
             {
