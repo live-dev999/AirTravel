@@ -15,13 +15,8 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace AirTravel.Domain;
-
-public enum Status
-{
-    Free,
-    Pending,
-    WaitPayment,
-    Paid,
-    Cancel,
+export default interface ErrorServer {
+    statusCode: number;
+    message: string;
+    details: string;
 }

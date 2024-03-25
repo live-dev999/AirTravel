@@ -15,13 +15,19 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace AirTravel.Domain;
+import { Message } from "semantic-ui-react"
 
-public enum Status
-{
-    Free,
-    Pending,
-    WaitPayment,
-    Paid,
-    Cancel,
+interface Props {
+    errors: string[]
+}
+export default function ValidationEror({ errors }: Props) {
+    return (
+        <Message error>
+            {errors && (<Message.List>
+                {errors.map((err: string, i) => (
+                    <Message.Item key={i}>{err}</Message.Item>
+                ))}
+            </Message.List>)}
+        </Message>
+    )
 }

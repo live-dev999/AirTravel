@@ -15,13 +15,20 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace AirTravel.Domain;
+import Calendar from "react-calendar";
+import { Header, Menu } from "semantic-ui-react";
 
-public enum Status
-{
-    Free,
-    Pending,
-    WaitPayment,
-    Paid,
-    Cancel,
+export default function FlightFilters() {
+    return (
+        <>
+            <Menu vertical size='large' style={{ width: '100%', marginTop: 25 }}>
+                <Header icon='filter' attached color='teal' content='Filters' />
+                <Menu.Item content='Activities' />
+                <Menu.Item content="I'm going" />
+                <Menu.Item content="I'm hosting" />
+            </Menu>
+            <Header />
+            <Calendar />
+        </>
+    )
 }

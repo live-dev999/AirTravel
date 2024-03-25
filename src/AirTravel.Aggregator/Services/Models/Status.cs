@@ -19,6 +19,7 @@ namespace AirTravel.Aggregator.Services.Models;
 
 public enum Status
 {
+    Free,
     Pending,
     WaitPayment,
     Paid,

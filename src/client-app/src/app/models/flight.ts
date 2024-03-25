@@ -15,13 +15,14 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace AirTravel.Domain;
-
-public enum Status
-{
-    Free,
-    Pending,
-    WaitPayment,
-    Paid,
-    Cancel,
+export interface Flight {
+  status: string
+  id: string
+  title: string
+  departureTime: string
+  description: string
+  flightNumber:string
+  category: string
+  from: string
+  to: string
 }
