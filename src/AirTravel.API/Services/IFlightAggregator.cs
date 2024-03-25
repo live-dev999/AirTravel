@@ -17,29 +17,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using AirTravel.Domain;
 
-namespace AirTravel.Aggregator.Services.Sources.FirstSource;
-
-public class FakeFirstFlightSourceAdapter : IFlightDataAdapter
+namespace AirTravel.API.Services
 {
-    private readonly IFakeFirstFlightSource source;
-
-    public FakeFirstFlightSourceAdapter(IFakeFirstFlightSource source)
+    public interface IFlightAggregator
     {
-        this.source = source;
-    }
+        Task<List<Flight>> GetFlights(string from, string to, DateTime date);
 
-    public async Task<List<IFlightInfo>> GetFlightsAsync(string from, string to, DateTime date)
-    {
-        // We retrieve data from data source 1 and transform it into a unified format.
-        List<IFlightInfo> flightsFromSource = await source.SearchFlightsAsync(from, to, date);
-        return flightsFromSource.Cast<IFlightInfo>().ToList();
-    }
-
-    public async Task<IFlightInfo> SetReservationAsync(IFlightInfo tiket)
-    {
-        return await source.SetReservationAsync(tiket);
+        Task<Flight> SetupReservation(Flight flight);
     }
 }

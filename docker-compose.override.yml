@@ -16,8 +16,8 @@ services:
   postgres_exporter:
     environment:
       DATA_SOURCE_URI: "postgres:5432/atdb?sslmode=disable"
-      DATA_SOURCE_USER: "postgres"
-      DATA_SOURCE_PASS: "postgres"
+      DATA_SOURCE_USER: "docker"
+      DATA_SOURCE_PASS: "docker"
       PG_EXPORTER_EXTEND_QUERY_PATH: "/etc/postgres_exporter/queries.yaml"
     volumes:
       - ./queries.yaml:/etc/postgres_exporter/queries.yaml:ro
@@ -33,11 +33,12 @@ services:
       # - postgres
       - backend
 
-  postgres-db:
+  postgres:
     environment:
+      PGUSER: "docker"
       POSTGRES_DB: "atdb"
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_USER: "docker"
+      POSTGRES_PASSWORD: "docker"
     ports:
       - "5432:5432"
     volumes:
@@ -49,7 +50,7 @@ services:
       retries: 5
     networks:
     - backend
-  # postgres-db:
+  # postgres:
   #   command:
   #     - "postgres"
   #     - "-c"
@@ -93,7 +94,7 @@ services:
   #     - ../2. Init Database:/docker-entrypoint-initdb.d
   #     - pgdata:/var/lib/postgresql/data
   #   ports:
-  #     - "5932:5432"
+  #     - "5432:5432"
   #   healthcheck:
   #     test: ["CMD-SHELL", "pg_isready -U postgres -d atdb"]
   #     interval: 10s
@@ -151,7 +152,7 @@ services:
     environment:
       # - ASPNETCORE_ENVIRONMENT=Development
       # - ConnectionString=Host=192.168.0.97;Port=5432;Database=atdb;Username=postgres;Password=NewPassw0rd
-      - ConnectionString=Host=${EXTERNAL_DNS_NAME_OR_IP};Port=5932;Database=atdb;Username=postgres;Password=postgres;Pooling=true;
+      - ConnectionString=Host=docker.for.mac.localhost;Port=5432;Database=atdb;Username=docker;Password=docker;Pooling=true;
       - Url_AggregatorUrl=http://${EXTERNAL_DNS_NAME_OR_IP}:5003/
       #- ASPNETCORE_URLS=https://+:443;http://+:80
     ports:
@@ -161,7 +162,7 @@ services:
     #  - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
     restart: always
     depends_on:
-      - postgres-db
+      - postgres
     networks:
       - backend
       # - postgres

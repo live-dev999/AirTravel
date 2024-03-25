@@ -23,7 +23,6 @@ using AirTravel.Domain;
 using AirTravel.Persistence;
 using FluentValidation;
 using MediatR;
-using Microsoft.VisualBasic;
 
 namespace AirTravel.Application.Bookings
 {
@@ -71,14 +70,14 @@ namespace AirTravel.Application.Bookings
                 //     Booking = request.Booking,
                 //     IsHost = true
                 // };
-                var newFlight = new Flight()
-                {
-                    From = "Start",
-                    To = "End",
-                    DepartureTime = DateTime.UtcNow.AddMonths(1),
-                    ArrivalTime = DateTime.UtcNow.AddMonths(1).AddHours(4),
-                };
-                var flightEntity = _context.Add(newFlight);
+                // var newFlight = new Flight()
+                // {
+                //     From = "Start",
+                //     To = "End",
+                //     DepartureTime = DateTime.UtcNow.AddMonths(1),
+                //     ArrivalTime = DateTime.UtcNow.AddMonths(1).AddHours(4),
+                // };
+                // var flightEntity = _context.Add(newFlight);
                 // var result1 = await _context.SaveChangesAsync() > 0;
                 // if (!result1)
                 //     return Result<Unit>.Failure("Failed to create Booking");
@@ -98,7 +97,7 @@ namespace AirTravel.Application.Bookings
                 // if (!result2)
                 //     return Result<Unit>.Failure("Failed to create Booking");
 
-                request.Booking.Flight = flightEntity.Entity;
+                // request.Booking.Flight = flightEntity.Entity;
                 request.Booking.Passenger = passEntity.Entity;
                 request.Booking.BookingTime = DateTime.UtcNow.SetKindUtc();
 

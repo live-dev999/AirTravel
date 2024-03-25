@@ -29,4 +29,5 @@ public class FlightInfo : IFlightInfo
     public DateTime DepartureTime { get; set; }
     public DateTime ArrivalTime { get; set; }
     public FlightInfoSource FlightInfoSource { get; set; }
+    public Status Status { get; set; }
 }

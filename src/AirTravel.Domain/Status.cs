@@ -15,14 +15,12 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+namespace AirTravel.Domain;
 
-namespace AirTravel.Aggregator.Services.Sources.SecondSource;
-
-public interface IFakeSecondFlightSource
+public enum Status
 {
-    Task<List<IFlightInfo>> SearchFlightsAsync(string from, string to, DateTime date);
-    Task<IFlightInfo> SetReservationAsync(IFlightInfo tiket);
+    Pending,
+    WaitPayment,
+    Paid,
+    Cancel
 }

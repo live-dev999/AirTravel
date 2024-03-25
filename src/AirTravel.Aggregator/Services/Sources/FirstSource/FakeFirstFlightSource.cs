@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AirTravel.Aggregator.Services.Models;
 
@@ -25,7 +26,7 @@ namespace AirTravel.Aggregator.Services.Sources.FirstSource;
 public class FakeFirstFlightSource : IFakeFirstFlightSource
 {
     #region Fields
-    private readonly List<IFlightInfo> _flightInfos = new List<IFlightInfo>
+    private static List<IFlightInfo> _flightInfos = new List<IFlightInfo>
     {
         new FlightInfo()
         {
@@ -98,5 +99,17 @@ public class FakeFirstFlightSource : IFakeFirstFlightSource
         //await Task.Delay(3000);
         return await Task.FromResult(_flightInfos);
         // throw new NotImplementedException();
+    }
+
+    public async Task<IFlightInfo> SetReservationAsync(IFlightInfo tiket)
+    {
+        return await Task.Run(()=>{
+            // if(_flightInfos==null)
+            //     Console.WriteLine($" _flightInfos is null >!!!!! ");
+            // Console.WriteLine($"Count _flightInfos: {_flightInfos.Count}");
+            var result =_flightInfos.FirstOrDefault(_=>_.FlightId == tiket.FlightId);
+            result.Status = Status.WaitPayment;
+            return result;
+        });
     }
 }

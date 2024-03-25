@@ -21,7 +21,7 @@ namespace AirTravel.Domain;
 
 public class Flight
 {
-    public int FlightId { get; set; }
+    public int Id { get; set; }
 
     public string From { get; set; }
 
@@ -32,6 +32,6 @@ public class Flight
     public DateTime ArrivalTime { get; set; }
     public string FlightNumber { get; set; }
     public string ExternalId { get; set; }
-
+    public Status Status { get; set; }
     // public decimal Price { get; set; }
 }

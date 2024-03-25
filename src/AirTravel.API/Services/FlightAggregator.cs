@@ -17,90 +17,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Threading;
 using System.Threading.Tasks;
-using AirTravel.Application.Core;
-using AirTravel.Config;
 using AirTravel.Domain;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace AirTravel.API.Services
 {
-    public class ExternalFlightData
-    {
-        public string FlightId { get; set; }
-        public string FlightNumber { get; set; }
-        public string DepartureAirport { get; set; }
-        public string ArrivalAirport { get; set; }
-        public DateTime DepartureTime { get; set; }
-        public DateTime ArrivalTime { get; set; }
-    }
-
-    public interface IExternalFlightApi
-    {
-        Task<List<ExternalFlightData>> GetFlights(string from, string to, DateTime date);
-    }
-
-    // public static class HttpContentExtensions
-    // {
-    //     public static async Task<T> ReadAsAsync<T>(
-    //         this HttpContent content,
-    //         CancellationToken ct
-    //     ) => await JsonSerializer.DeserializeAsync<T>(await content.ReadAsStreamAsync(ct));
-    // }
-
-    public class ExternalFlightApi : IExternalFlightApi
-    {
-        #region Fields
-
-        private readonly ILogger<ExternalFlightApi> _logger;
-        private readonly UrlsConfig _config;
-        private HttpClient _httpClient;
-
-        #endregion
-
-        #region Ctors
-
-        public ExternalFlightApi(
-            HttpClient httpClient,
-            ILogger<ExternalFlightApi> logger,
-            UrlsConfig config
-        )
-        {
-            this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            this._httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-            this._config = config ?? throw new ArgumentNullException(nameof(config));
-        }
-
-        #endregion
-        public async Task<List<ExternalFlightData>> GetFlights(
-            string from,
-            string to,
-            DateTime date
-        )
-        {
-            _logger.LogInformation("Called is: ExternalFlightApi - GetFlights");
-            var ct = new CancellationToken();
-
-            var response = await _httpClient.PostAsync($"api/Ticket/Search", null);
-            _logger.LogInformation(
-                $"Called is: ExternalFlightApi - GetFlights  = {response.StatusCode}"
-            );
-            _logger.LogInformation(await response.Content.ReadAsStringAsync());
-            var result = await response.Content.ReadFromJsonAsync<List<ExternalFlightData>>(ct);
-
-            return result;
-        }
-    }
-
-    public interface IFlightAggregator
-    {
-        Task<List<Flight>> GetFlights(string from, string to, DateTime date);
-    }
-
     public class FlightAggregator : IFlightAggregator
     {
         private readonly IExternalFlightApi _externalFlightApi;
@@ -136,6 +58,13 @@ namespace AirTravel.API.Services
             }
         }
 
+        public async Task<Flight> SetupReservation(Flight flight)
+        {
+            var exData = MappingEx(flight);
+            var res = await _externalFlightApi.SetupReservation(exData);
+            return Mapping(res);
+        }
+
         private List<Flight> ConvertToUnifiedFormat(List<ExternalFlightData> flightsData)
         {
             try
@@ -144,17 +73,7 @@ namespace AirTravel.API.Services
                 List<Flight> flights = new List<Flight>();
                 foreach (var flightData in flightsData)
                 {
-                    // Mapping Data
-                    Flight flight = new Flight
-                    {
-                        FlightId  = new Random().Next(10000),
-                        ExternalId = flightData.FlightId,
-                        FlightNumber = flightData.FlightNumber,
-                        From = flightData.DepartureAirport,
-                        To = flightData.ArrivalAirport,
-                        DepartureTime = flightData.DepartureTime,
-                        ArrivalTime = flightData.ArrivalTime
-                    };
+                    Flight flight = Mapping(flightData);
                     flights.Add(flight);
                 }
                 return flights;
@@ -164,6 +83,37 @@ namespace AirTravel.API.Services
                 _logger.LogError($"Error in ConvertToUnifiedFormat: {ex.Message}");
                 throw;
             }
+        }
+
+        private static Flight Mapping(ExternalFlightData flightData)
+        {
+            // Mapping Data
+            return new Flight
+            {
+                Id = new Random().Next(10000),
+                ExternalId = flightData.FlightId,
+                FlightNumber = flightData.FlightNumber,
+                From = flightData.DepartureAirport,
+                To = flightData.ArrivalAirport,
+                DepartureTime = flightData.DepartureTime,
+                ArrivalTime = flightData.ArrivalTime,
+                Status = flightData.Status
+            };
+        }
+
+        private static ExternalFlightData MappingEx(Flight flightData)
+        {
+            // Mapping Data
+            return new ExternalFlightData
+            {
+                FlightId = flightData.ExternalId,
+                FlightNumber = flightData.FlightNumber,
+                DepartureAirport = flightData.From,
+                ArrivalAirport = flightData.To,
+                DepartureTime = flightData.DepartureTime,
+                ArrivalTime = flightData.ArrivalTime,
+                Status = flightData.Status
+            };
         }
     }
 }

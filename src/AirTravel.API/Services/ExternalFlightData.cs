@@ -16,13 +16,18 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using AirTravel.Domain;
 
-namespace AirTravel.Aggregator.Services.Sources.SecondSource;
-
-public interface IFakeSecondFlightSource
+namespace AirTravel.API.Services
 {
-    Task<List<IFlightInfo>> SearchFlightsAsync(string from, string to, DateTime date);
-    Task<IFlightInfo> SetReservationAsync(IFlightInfo tiket);
+    public class ExternalFlightData
+    {
+        public string FlightId { get; set; }
+        public string FlightNumber { get; set; }
+        public string DepartureAirport { get; set; }
+        public string ArrivalAirport { get; set; }
+        public DateTime DepartureTime { get; set; }
+        public DateTime ArrivalTime { get; set; }
+        public Status Status { get; set; }
+    }
 }

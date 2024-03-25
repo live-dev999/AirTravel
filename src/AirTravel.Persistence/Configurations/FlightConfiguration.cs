@@ -26,9 +26,9 @@ namespace AirTravel.Persistence
         public void Configure(EntityTypeBuilder<Flight> builder)
         {
             // Setup Flight
-            builder.HasKey(f => f.FlightId);
+            builder.HasKey(f => f.Id);
 
-            builder.Property(f => f.FlightId).UseSerialColumn();
+            builder.Property(f => f.Id).UseSerialColumn();
 
             builder.Property(f => f.From).IsRequired();
 

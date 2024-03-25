@@ -5,9 +5,9 @@ services:
     container_name: exporter_container
     image: prometheuscommunity/postgres-exporter:v0.10.1
 
-  postgres-db:
+  postgres:
     container_name: postgres_container
-    image: postgres:15.6
+    image: postgres:latest
 
   pgadmin:
     container_name: pgadmin_container

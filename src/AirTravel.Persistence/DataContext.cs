@@ -27,7 +27,7 @@ namespace AirTravel.Persistence
         public DbSet<Booking> Tickets { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Passenger> Passengers { get; set; }
-        public DbSet<Flight> Flights { get; set; }
+        // public DbSet<Flight> Flights { get; set; }
         #endregion
 
 
@@ -52,7 +52,7 @@ namespace AirTravel.Persistence
         {
             modelBuilder.HasDefaultSchema("public");
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
-            modelBuilder.ApplyConfiguration(new FlightConfiguration());
+            // modelBuilder.ApplyConfiguration(new FlightConfiguration());
             modelBuilder.ApplyConfiguration(new PassengerConfiguration());
             modelBuilder.ApplyConfiguration(new BookingConfiguration());
         }

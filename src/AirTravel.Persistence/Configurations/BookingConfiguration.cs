@@ -32,7 +32,7 @@ namespace AirTravel.Persistence
 
             builder.Property(b => b.BookingId).UseSerialColumn();
 
-            builder.HasOne(b => b.Flight).WithMany().HasForeignKey(b => b.FlightId).IsRequired();
+            // builder.HasOne(b => b.Flight).WithMany().HasForeignKey(b => b.FlightId).IsRequired();
 
             builder
                 .HasOne(b => b.Passenger)
