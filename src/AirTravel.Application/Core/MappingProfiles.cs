@@ -24,7 +24,7 @@ public class MappingProfiles : Profile
 {
     public MappingProfiles()
     {
-        CreateMap<AirTravel.Domain.Booking, AirTravel.Domain.Booking>();
-        CreateMap<AirTravel.Domain.Booking, BookingDto>();
+        CreateMap<AirTravel.Domain.Booking, AirTravel.Domain.Booking>().ForMember(dest => dest.FlightId,opt => opt.Ignore()) ;
+        CreateMap<AirTravel.Domain.Booking, BookingDto>().ForMember(dest => dest.FlightId,opt => opt.Ignore());
     }
 }
